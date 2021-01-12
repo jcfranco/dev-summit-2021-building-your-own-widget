@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "noImplicitAny": true,
+    "noEmitHelpers": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "jsxFactory": "tsx",
+    "lib": [ "dom", "es2015", "es2015.promise", "scripthost" ],
+    "target": "es5",
+    "experimentalDecorators": true,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "include": ["./demos", "typings"],
+  "exclude": ["node_modules", "**/*-final.tsx", "**/*-final.ts"]
+}

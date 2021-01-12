@@ -1,0 +1,43 @@
+{
+  "name": "dev-summit-2021-building-your-own-widget",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcfranco/dev-summit-2021-building-your-own-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jcfranco/dev-summit-2021-building-your-own-widget/issues"
+  },
+  "homepage": "https://github.com/jcfranco/dev-summit-2021-building-your-own-widget#readme",
+  "dependencies": {
+    "@types/arcgis-js-api": "~4.14.0",
+    "esri-reveal.js-templates": "git+https://github.com/esri/reveal.js.git"
+  },
+  "devDependencies": {
+    "dojo-typings": "~1.11.9",
+    "grunt": "~1.0.4",
+    "grunt-sass": "~3.1.0",
+    "prettier": "~1.19.1",
+    "typescript": "~3.8.3"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false,
+    "overrides": [
+      {
+        "files": "*.tsx",
+        "options": {
+          "printWidth": 100
+        }
+      }
+    ]
+  }
+}
