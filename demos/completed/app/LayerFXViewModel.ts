@@ -1,28 +1,36 @@
-import Widget = require("esri/widgets/Widget");
-import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorators";
-import { tsx } from "esri/widgets/support/widget";
-import { LayerFXProperties } from "./interfaces";
-import { CSS, i18n } from "./resources";
-import LayerFXViewModel = require("./LayerFXViewModel");
-import Layer = require("esri/layers/Layer");
+import Accessor = require("esri/core/Accessor");
+import Collection = require("esri/core/Collection");
 import MapView = require("esri/views/MapView");
+import { init } from "esri/core/watchUtils";
+import { property, subclass } from "esri/core/accessorSupport/decorators";
+import { LayerFXProperties, LayerEffects } from "./interfaces";
+import LayerEffect = require("./LayerEffect");
+import Layer = require("esri/layers/Layer");
 
-// todo: drag and drop ordering?
+const LayerEffectCollection = Collection.ofType(LayerEffect);
 
-@subclass("esri.demo.LayerFX")
-class LayerFX extends Widget {
+@subclass("esri.demo.LayerFXViewModel")
+class LayerFXViewModel extends Accessor {
   //--------------------------------------------------------------------------
   //
   //  Lifecycle
   //
   //--------------------------------------------------------------------------
 
-  constructor(props: LayerFXProperties) {
+  constructor(props?: LayerFXProperties) {
     super(props);
   }
 
-  postInitialize(): void {
-    //this.own();
+  initialize(): void {
+    init(this, "layer", (layer) => {
+      if (layer) {
+        this.view.whenLayerView(layer).then(async (layerView) => {
+          this.effects.forEach((effect) => {
+            (layerView as any).effect = (effect as any).statement;
+          });
+        });
+      }
+    });
   }
 
   destroy(): void {}
@@ -40,35 +48,39 @@ class LayerFX extends Widget {
   //--------------------------------------------------------------------------
 
   //----------------------------------
+  //  effects
+  //----------------------------------
+
+  @property({
+    type: Collection.ofType(LayerEffect)
+  })
+  effects: LayerEffects = new LayerEffectCollection([
+    new LayerEffect({
+      id: "brightness",
+      value: 100,
+      enabled: true
+    })
+  ]);
+
+  //----------------------------------
   //  layer
   //----------------------------------
 
-  @aliasOf("viewModel.layer")
+  @property()
   layer: Layer = null;
 
   //----------------------------------
   //  view
   //----------------------------------
 
-  @aliasOf("viewModel.view")
-  view: MapView = null;
-
-  //----------------------------------
-  //  viewModel
-  //----------------------------------
-
   @property()
-  viewModel: LayerFXViewModel = new LayerFXViewModel();
+  view: MapView = null;
 
   //--------------------------------------------------------------------------
   //
   //  Public Methods
   //
   //--------------------------------------------------------------------------
-
-  render() {
-    return <div>test</div>;
-  }
 
   //--------------------------------------------------------------------------
   //
@@ -83,4 +95,4 @@ class LayerFX extends Widget {
   //--------------------------------------------------------------------------
 }
 
-export = LayerFX;
+export = LayerFXViewModel;

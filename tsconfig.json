@@ -7,7 +7,7 @@
     "sourceMap": true,
     "jsx": "react",
     "jsxFactory": "tsx",
-    "target": "ES2019",
+    "target": "es5",
     "experimentalDecorators": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
