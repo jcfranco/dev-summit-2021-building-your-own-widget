@@ -1,12 +1,14 @@
 import Widget = require("esri/widgets/Widget");
 import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorators";
 import { tsx } from "esri/widgets/support/widget";
-import { LayerFXProperties } from "./interfaces";
+import { LayerFXWidgetProperties } from "./interfaces";
 import { CSS, i18n } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
-import Layer = require("esri/layers/Layer");
+import LayerEffect = require("./LayerEffect");
 
-// todo: drag and drop ordering?
+// todo: i18n
+// todo: drag and drop ordering for customizing?
+// todo: could use calcite components for customizing?
 
 @subclass("esri.demo.LayerFX")
 class LayerFX extends Widget {
@@ -16,21 +18,9 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  constructor(props: LayerFXProperties) {
+  constructor(props: LayerFXWidgetProperties) {
     super(props);
   }
-
-  postInitialize(): void {
-    //this.own();
-  }
-
-  destroy(): void {}
-
-  //--------------------------------------------------------------------------
-  //
-  //  Variables
-  //
-  //--------------------------------------------------------------------------
 
   //--------------------------------------------------------------------------
   //
@@ -43,7 +33,7 @@ class LayerFX extends Widget {
   //----------------------------------
 
   @aliasOf("viewModel.layer")
-  layer: Layer = null;
+  layer: Required<{ effect: string }>;
 
   //----------------------------------
   //  viewModel
@@ -59,7 +49,11 @@ class LayerFX extends Widget {
   //--------------------------------------------------------------------------
 
   render() {
-    return <div>test</div>;
+    const { effects } = this.viewModel;
+
+    const sliders = effects.toArray().map((effect) => this.renderEffect(effect));
+
+    return <div class={this.classes(CSS.root, CSS.esriWidget)}>{sliders}</div>;
   }
 
   //--------------------------------------------------------------------------
@@ -68,11 +62,27 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  //--------------------------------------------------------------------------
-  //
-  //  Private Methods
-  //
-  //--------------------------------------------------------------------------
+  // todo: can do NLS for effect ID
+  protected renderEffect(effect: LayerEffect) {
+    return (
+      <fieldset>
+        <label>
+          {effect.id}
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value={effect.value}
+            class="slider"
+            oninput={(event: Event) => {
+              const target = event.target as HTMLInputElement;
+              effect.value = target.valueAsNumber;
+            }}
+          ></input>
+        </label>
+      </fieldset>
+    );
+  }
 }
 
 export = LayerFX;

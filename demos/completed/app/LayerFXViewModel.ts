@@ -1,12 +1,12 @@
 import Accessor = require("esri/core/Accessor");
 import Collection = require("esri/core/Collection");
-import { init } from "esri/core/watchUtils";
+import Handles = require("esri/core/Handles"); // handleowner wasn't working :(
+import { init, on, watch } from "esri/core/watchUtils";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { LayerFXProperties, LayerEffects } from "./interfaces";
+import { LayerFXProperties, LayerEffectCollection } from "./interfaces";
 import LayerEffect = require("./LayerEffect");
-import Layer = require("esri/layers/Layer");
 
-const LayerEffectCollection = Collection.ofType(LayerEffect);
+const FXCollection = Collection.ofType(LayerEffect);
 
 @subclass("esri.demo.LayerFXViewModel")
 class LayerFXViewModel extends Accessor {
@@ -21,28 +21,27 @@ class LayerFXViewModel extends Accessor {
   }
 
   initialize(): void {
-    init(this, "layer", (layer) => {
-      if (layer) {
-        this.effects.forEach((effect) => {
-          (layer as any).effect = (effect as any).statement;
-        });
-        const effect = this.effects
-          .map((effect) => (effect as any).statement)
-          .toArray()
-          .join(", ");
-
-        console.log(effect);
-      }
-    });
+    this.handles.add([
+      on(this, "effects", "change", () => {
+        this.notifyChange("statements");
+      }),
+      init(this, "layer", () => this.notifyChange("statements")),
+      watch(this, "statements", (statements) => (this.layer.effect = statements))
+    ]);
   }
 
-  destroy(): void {}
+  destroy() {
+    this.handles.removeAll();
+    this.handles.destroy();
+  }
 
   //--------------------------------------------------------------------------
   //
   //  Variables
   //
   //--------------------------------------------------------------------------
+
+  handles = new Handles();
 
   //--------------------------------------------------------------------------
   //
@@ -55,45 +54,52 @@ class LayerFXViewModel extends Accessor {
   //----------------------------------
 
   @property({
+    readOnly: true,
     type: Collection.ofType(LayerEffect)
   })
-  effects: LayerEffects = new LayerEffectCollection([
-    new LayerEffect({
-      id: "brightness",
-      value: 20,
-      enabled: true
-    }),
-    new LayerEffect({
-      id: "opacity",
-      value: 20,
-      enabled: true
-    })
-  ]);
+  get effects(): LayerEffectCollection {
+    return new FXCollection([
+      new LayerEffect({
+        id: "brightness",
+        value: 20,
+        enabled: true
+      }),
+      new LayerEffect({
+        id: "opacity",
+        value: 20,
+        enabled: true
+      })
+    ]);
+  }
 
   //----------------------------------
   //  layer
   //----------------------------------
 
   @property()
-  layer: Layer = null;
+  layer: Required<{ effect: string }> = null;
 
-  //--------------------------------------------------------------------------
-  //
-  //  Public Methods
-  //
-  //--------------------------------------------------------------------------
+  //----------------------------------
+  //  statements
+  //----------------------------------
 
-  //--------------------------------------------------------------------------
-  //
-  //  Protected Methods
-  //
-  //--------------------------------------------------------------------------
+  @property({
+    readOnly: true
+  })
+  get statements(): string {
+    const { layer, effects } = this;
 
-  //--------------------------------------------------------------------------
-  //
-  //  Private Methods
-  //
-  //--------------------------------------------------------------------------
+    if (!layer) {
+      return;
+    }
+
+    return effects.length
+      ? effects
+          .map((effect) => effect.statement)
+          .toArray()
+          .join(" ")
+      : null;
+  }
 }
 
 export = LayerFXViewModel;

@@ -1,6 +1,6 @@
 import Accessor = require("esri/core/Accessor");
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { LayerFXProperties, LayerEffectID, LayerEffectValue } from "./interfaces";
+import { LayerEffectProperties, LayerEffectID, LayerEffectValue } from "./interfaces";
 
 @subclass("esri.demo.LayerEffect")
 class LayerEffect extends Accessor {
@@ -10,22 +10,9 @@ class LayerEffect extends Accessor {
   //
   //--------------------------------------------------------------------------
 
-  constructor(props?: any) {
-    // todo
+  constructor(props?: LayerEffectProperties) {
     super(props);
   }
-
-  postInitialize(): void {
-    //this.own();
-  }
-
-  destroy(): void {}
-
-  //--------------------------------------------------------------------------
-  //
-  //  Variables
-  //
-  //--------------------------------------------------------------------------
 
   //--------------------------------------------------------------------------
   //
@@ -58,7 +45,7 @@ class LayerEffect extends Accessor {
   //  scale
   //----------------------------------
 
-  // todo?
+  // todo?  This could complicate things since scale would need to use effect object.
   //@property()
   //scale: number = null;
 
@@ -78,24 +65,11 @@ class LayerEffect extends Accessor {
 
   //--------------------------------------------------------------------------
   //
-  //  Public Methods
-  //
-  //--------------------------------------------------------------------------
-
-  //--------------------------------------------------------------------------
-  //
-  //  Protected Methods
-  //
-  //--------------------------------------------------------------------------
-
-  //--------------------------------------------------------------------------
-  //
   //  Private Methods
   //
   //--------------------------------------------------------------------------
 
-  // todo: getMin/Max/default
-
+  // todo: add props for min/max?
   getEffectTemplate(effectId: LayerEffectID, value: LayerEffectValue): string {
     const firstValue = Array.isArray(value) ? value[0] : value;
 
@@ -103,8 +77,7 @@ class LayerEffect extends Accessor {
       return null;
     }
 
-    // going with % when possible
-    // then px
+    // going with % when possible then px or deg depending on effect
     switch (effectId) {
       case "bloom":
         return `bloom(${value[0]}%, ${value[1]}px, ${value[2]}%)`;
