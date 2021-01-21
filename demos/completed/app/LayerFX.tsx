@@ -5,7 +5,6 @@ import { LayerFXProperties } from "./interfaces";
 import { CSS, i18n } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
 import Layer = require("esri/layers/Layer");
-import MapView = require("esri/views/MapView");
 
 // todo: drag and drop ordering?
 
@@ -45,13 +44,6 @@ class LayerFX extends Widget {
 
   @aliasOf("viewModel.layer")
   layer: Layer = null;
-
-  //----------------------------------
-  //  view
-  //----------------------------------
-
-  @aliasOf("viewModel.view")
-  view: MapView = null;
 
   //----------------------------------
   //  viewModel

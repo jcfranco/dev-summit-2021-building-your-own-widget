@@ -1,6 +1,5 @@
 import Accessor = require("esri/core/Accessor");
 import Collection = require("esri/core/Collection");
-import MapView = require("esri/views/MapView");
 import { init } from "esri/core/watchUtils";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
 import { LayerFXProperties, LayerEffects } from "./interfaces";
@@ -24,11 +23,15 @@ class LayerFXViewModel extends Accessor {
   initialize(): void {
     init(this, "layer", (layer) => {
       if (layer) {
-        this.view.whenLayerView(layer).then(async (layerView) => {
-          this.effects.forEach((effect) => {
-            (layerView as any).effect = (effect as any).statement;
-          });
+        this.effects.forEach((effect) => {
+          (layer as any).effect = (effect as any).statement;
         });
+        const effect = this.effects
+          .map((effect) => (effect as any).statement)
+          .toArray()
+          .join(", ");
+
+        console.log(effect);
       }
     });
   }
@@ -57,7 +60,12 @@ class LayerFXViewModel extends Accessor {
   effects: LayerEffects = new LayerEffectCollection([
     new LayerEffect({
       id: "brightness",
-      value: 100,
+      value: 20,
+      enabled: true
+    }),
+    new LayerEffect({
+      id: "opacity",
+      value: 20,
       enabled: true
     })
   ]);
@@ -68,13 +76,6 @@ class LayerFXViewModel extends Accessor {
 
   @property()
   layer: Layer = null;
-
-  //----------------------------------
-  //  view
-  //----------------------------------
-
-  @property()
-  view: MapView = null;
 
   //--------------------------------------------------------------------------
   //
