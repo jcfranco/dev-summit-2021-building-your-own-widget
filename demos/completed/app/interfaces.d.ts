@@ -16,6 +16,8 @@ export type LayerEffectID =
   | "saturate"
   | "sepia";
 
+export type EffectLayer = Required<{ effect: string }>;
+
 export type LayerEffectValue = number | number[];
 
 export interface LayerEffectProperties {
@@ -27,7 +29,7 @@ export interface LayerEffectProperties {
 export type LayerEffectCollection = Collection<LayerEffect>;
 
 interface LayerFXProperties {
-  layer: Required<{ effect: string }>;
+  layer: EffectLayer;
 }
 
 export interface LayerFXWidgetProperties extends WidgetProperties, LayerFXProperties {}

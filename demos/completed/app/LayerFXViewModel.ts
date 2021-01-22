@@ -1,9 +1,9 @@
 import Accessor = require("esri/core/Accessor");
 import Collection = require("esri/core/Collection");
 import Handles = require("esri/core/Handles"); // handleowner wasn't working :(
-import { init, on, watch } from "esri/core/watchUtils";
+import { watch } from "esri/core/watchUtils";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { LayerFXProperties, LayerEffectCollection } from "./interfaces";
+import { EffectLayer, LayerFXProperties, LayerEffectCollection } from "./interfaces";
 import LayerEffect = require("./LayerEffect");
 
 const FXCollection = Collection.ofType(LayerEffect);
@@ -21,13 +21,7 @@ class LayerFXViewModel extends Accessor {
   }
 
   initialize(): void {
-    this.handles.add([
-      on(this, "effects", "change", () => {
-        this.notifyChange("statements");
-      }),
-      init(this, "layer", () => this.notifyChange("statements")),
-      watch(this, "statements", (statements) => (this.layer.effect = statements))
-    ]);
+    this.handles.add([watch(this, "statements", (statements) => (this.layer.effect = statements))]);
   }
 
   destroy() {
@@ -61,13 +55,23 @@ class LayerFXViewModel extends Accessor {
     return new FXCollection([
       new LayerEffect({
         id: "brightness",
-        value: 20,
-        enabled: true
+        value: 0
       }),
       new LayerEffect({
         id: "opacity",
-        value: 20,
-        enabled: true
+        value: 0
+      }),
+      new LayerEffect({
+        id: "saturate",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "sepia",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "invert",
+        value: 0
       })
     ]);
   }
@@ -77,7 +81,7 @@ class LayerFXViewModel extends Accessor {
   //----------------------------------
 
   @property()
-  layer: Required<{ effect: string }> = null;
+  layer: EffectLayer = null;
 
   //----------------------------------
   //  statements
@@ -95,6 +99,7 @@ class LayerFXViewModel extends Accessor {
 
     return effects.length
       ? effects
+          .filter((effect) => effect.enabled)
           .map((effect) => effect.statement)
           .toArray()
           .join(" ")

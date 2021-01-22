@@ -54,7 +54,6 @@ class LayerEffect extends Accessor {
   //----------------------------------
 
   @property({
-    dependsOn: ["id", "value"],
     readOnly: true
   })
   get statement(): string {

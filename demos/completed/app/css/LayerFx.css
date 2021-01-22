@@ -1,3 +1,29 @@
 .layer-fx {
-  background: #fff;
+  background: #000;
+  padding: 20px;
+  border: 3px solid yellow;
+  color: #fff;
+  font-family: "Metal Mania", cursive;
+}
+
+.layer-fx fieldset {
+  border: none;
+}
+
+.layer-fx pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-left: 3px solid #f36d33;
+  color: #666;
+  page-break-inside: avoid;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.2;
+  margin-bottom: 1.2em;
+  max-width: 100%;
+  overflow: auto;
+  padding: 1em 1.5em;
+  display: block;
+  width: 250px;
+  word-wrap: break-word;
 }

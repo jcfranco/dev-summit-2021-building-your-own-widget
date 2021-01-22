@@ -1,7 +1,7 @@
 import Widget = require("esri/widgets/Widget");
 import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorators";
 import { tsx } from "esri/widgets/support/widget";
-import { LayerFXWidgetProperties } from "./interfaces";
+import { EffectLayer, LayerFXWidgetProperties } from "./interfaces";
 import { CSS, i18n } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
 import LayerEffect = require("./LayerEffect");
@@ -33,7 +33,7 @@ class LayerFX extends Widget {
   //----------------------------------
 
   @aliasOf("viewModel.layer")
-  layer: Required<{ effect: string }>;
+  layer: EffectLayer;
 
   //----------------------------------
   //  viewModel
@@ -51,9 +51,13 @@ class LayerFX extends Widget {
   render() {
     const { effects } = this.viewModel;
 
-    const sliders = effects.toArray().map((effect) => this.renderEffect(effect));
-
-    return <div class={this.classes(CSS.root, CSS.esriWidget)}>{sliders}</div>;
+    return (
+      <div class={this.classes(CSS.root, CSS.esriWidget)}>
+        <h2>🤘☠️ LAYER.FX ☠️🤘</h2>
+        {effects.toArray().map((effect) => this.renderEffect(effect))}
+        {this.renderStatements()}
+      </div>
+    );
   }
 
   //--------------------------------------------------------------------------
@@ -62,24 +66,43 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  // todo: can do NLS for effect ID
+  protected renderStatements() {
+    const { statements } = this.viewModel;
+
+    return statements ? <pre>{statements}</pre> : null;
+  }
+
+  // todo: can do NLS for these
   protected renderEffect(effect: LayerEffect) {
     return (
       <fieldset>
         <label>
           {effect.id}
           <input
-            type="range"
-            min="1"
-            max="100"
-            value={effect.value}
-            class="slider"
-            oninput={(event: Event) => {
+            type="checkbox"
+            checked={effect.enabled}
+            onchange={(event: Event) => {
               const target = event.target as HTMLInputElement;
-              effect.value = target.valueAsNumber;
+              effect.enabled = target.checked;
             }}
-          ></input>
+          />
         </label>
+        <fieldset>
+          <label>
+            Value
+            <input
+              type="range"
+              min="1"
+              max="100"
+              value={effect.value}
+              class="slider"
+              oninput={(event: Event) => {
+                const target = event.target as HTMLInputElement;
+                effect.value = target.valueAsNumber;
+              }}
+            ></input>
+          </label>
+        </fieldset>
       </fieldset>
     );
   }
