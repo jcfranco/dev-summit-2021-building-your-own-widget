@@ -4,6 +4,12 @@
   border: 3px solid yellow;
   color: #fff;
   font-family: "Metal Mania", cursive;
+  width: 250px;
+}
+
+.layer-fx__container {
+  max-height: 250px;
+  overflow: auto;
 }
 
 .layer-fx fieldset {
@@ -21,9 +27,9 @@
   line-height: 1.2;
   margin-bottom: 1.2em;
   max-width: 100%;
+  max-height: 75px;
   overflow: auto;
   padding: 1em 1.5em;
   display: block;
-  width: 250px;
   word-wrap: break-word;
 }

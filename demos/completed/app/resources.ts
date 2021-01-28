@@ -3,7 +3,7 @@
  */
 export const CSS = {
   root: "layer-fx",
-
+  container: "layer-fx__container",
   // common
   esriWidget: "esri-widget"
 };

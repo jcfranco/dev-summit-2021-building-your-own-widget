@@ -52,9 +52,27 @@ class LayerFXViewModel extends Accessor {
     type: Collection.ofType(LayerEffect)
   })
   get effects(): LayerEffectCollection {
+    // | "bloom"
+    // | "drop-shadow"
     return new FXCollection([
       new LayerEffect({
+        id: "blur",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "hue-rotate",
+        value: 0
+      }),
+      new LayerEffect({
         id: "brightness",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "contrast",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "grayscale",
         value: 0
       }),
       new LayerEffect({
@@ -102,7 +120,7 @@ class LayerFXViewModel extends Accessor {
           .filter((effect) => effect.enabled)
           .map((effect) => effect.statement)
           .toArray()
-          .join(" ")
+          .join("\n")
       : null;
   }
 }

@@ -54,7 +54,9 @@ class LayerFX extends Widget {
     return (
       <div class={this.classes(CSS.root, CSS.esriWidget)}>
         <h2>🤘☠️ LAYER.FX ☠️🤘</h2>
-        {effects.toArray().map((effect) => this.renderEffect(effect))}
+        <div class={CSS.container}>
+          {effects.toArray().map((effect) => this.renderEffect(effect))}
+        </div>
         {this.renderStatements()}
       </div>
     );
@@ -77,7 +79,6 @@ class LayerFX extends Widget {
     return (
       <fieldset>
         <label>
-          {effect.id}
           <input
             type="checkbox"
             checked={effect.enabled}
@@ -86,23 +87,19 @@ class LayerFX extends Widget {
               effect.enabled = target.checked;
             }}
           />
+          {effect.id}
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value={effect.value}
+            class="slider"
+            oninput={(event: Event) => {
+              const target = event.target as HTMLInputElement;
+              effect.value = target.valueAsNumber;
+            }}
+          />
         </label>
-        <fieldset>
-          <label>
-            Value
-            <input
-              type="range"
-              min="1"
-              max="100"
-              value={effect.value}
-              class="slider"
-              oninput={(event: Event) => {
-                const target = event.target as HTMLInputElement;
-                effect.value = target.valueAsNumber;
-              }}
-            ></input>
-          </label>
-        </fieldset>
       </fieldset>
     );
   }
