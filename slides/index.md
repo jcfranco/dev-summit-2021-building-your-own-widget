@@ -1,4 +1,4 @@
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-1.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-1.png" data-background-size="cover" -->
 <!-- Presenter: Franco -->
 
 # Building Your Own Widget <br />with the ArcGIS JSAPI
@@ -19,7 +19,7 @@
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-4.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
 # Setting up the Dev Environment
 
@@ -91,7 +91,7 @@ const shorthand = { person };
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: [Dev Environment](../demos/1-setup/)
 
@@ -99,7 +99,7 @@ const shorthand = { person };
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo Recap: Dev Environment
 
@@ -108,7 +108,7 @@ const shorthand = { person };
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-4.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
 <!-- Presenter: Matt -->
 
@@ -133,7 +133,7 @@ me.watch("age", singHappyBirthday);
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: Background
 
@@ -155,7 +155,7 @@ Requirements
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: Background
 
@@ -167,7 +167,7 @@ Exploring the Item structure
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: Background
 
@@ -179,7 +179,7 @@ Exploring the JS API `PortalItem` class
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: [`ItemScore` Class API](../demos/2-custom-class/)
 
@@ -203,7 +203,7 @@ interface ItemScore extends Accessor {
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo Recap: `ItemScore` Class
 
@@ -215,7 +215,7 @@ interface ItemScore extends Accessor {
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-4.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
 # Writing a Widget
 
@@ -283,7 +283,7 @@ interface SimpleWidget extends Widget {
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: [`SimpleWidget`](../demos/3-simple-view/)
 
@@ -306,7 +306,7 @@ Develop a simple widget
 
 <!-- Presenter: Franco -->
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-4.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
 # Improving Our Widget
 
@@ -380,7 +380,7 @@ interface ItemScore extends Widget {
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: Styling
 
@@ -390,7 +390,7 @@ interface ItemScore extends Widget {
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-3.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
 # Demo: [Updated View](../demos/4-custom-widget/)
 
@@ -415,7 +415,7 @@ interface ItemScore extends Widget {
 
 ---
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-4.png" data-background-size="cover" -->
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
 # Final Recap
 
@@ -451,7 +451,7 @@ interface ItemScore extends Widget {
 
 > Where can I find the slides/source?
 
-[bit.ly/buildwidgetsds20](http://bit.ly/buildwidgetsds20)
+[bit.ly/buildwidgetsds20](http://bit.ly/buildwidgetsds21)
 
 > Where can I submit a question?
 
@@ -459,6 +459,6 @@ interface ItemScore extends Widget {
 
 ---
 
-![Esri](../node_modules/esri-reveal.js-templates/img/esri-science-logo-white.png)
+<section data-markdown data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-5.png">
 
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/devsummit/bg-esri.png" data-background-size="cover" -->
+<img src="../node_modules/esri-reveal.js-templates/img/esri-science-logo-white.png" />
