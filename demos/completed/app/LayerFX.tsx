@@ -105,7 +105,7 @@ class LayerFX extends Widget {
   }
 
   protected renderEffectValues(effect: LayerEffect) {
-    return effect.values.map((value, index) => this.renderEffectValue(effect, value, index));
+    return effect.values?.map((value, index) => this.renderEffectValue(effect, value, index));
   }
 
   protected renderEffectEnabledLabel(effect: LayerEffect) {
