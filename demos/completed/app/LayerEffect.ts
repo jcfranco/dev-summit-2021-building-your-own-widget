@@ -76,19 +76,19 @@ class LayerEffect extends Accessor {
       case "bloom":
         return [
           {
-            name: "",
+            name: "Strength",
             min: 0,
             max: 100,
             unit: "%"
           },
           {
-            name: "",
+            name: "Radius",
             min: 0,
             max: 100,
             unit: "px"
           },
           {
-            name: "",
+            name: "Threshold",
             min: 0,
             max: 100,
             unit: "%"
