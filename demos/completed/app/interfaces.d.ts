@@ -16,6 +16,13 @@ export type LayerEffectID =
   | "saturate"
   | "sepia";
 
+export interface EffectValueType {
+  max: number;
+  min: number;
+  name?: string;
+  unit: "%" | "deg" | "px";
+}
+
 export type EffectLayer = Required<{ effect: string }>;
 
 export type LayerEffectValue = number | number[];

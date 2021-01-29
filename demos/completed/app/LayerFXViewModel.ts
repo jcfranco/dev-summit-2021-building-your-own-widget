@@ -52,15 +52,13 @@ class LayerFXViewModel extends Accessor {
     type: Collection.ofType(LayerEffect)
   })
   get effects(): LayerEffectCollection {
-    // | "bloom"
-    // | "drop-shadow"
     return new FXCollection([
       new LayerEffect({
-        id: "blur",
-        value: 0
+        id: "bloom",
+        value: [0, 0, 0]
       }),
       new LayerEffect({
-        id: "hue-rotate",
+        id: "blur",
         value: 0
       }),
       new LayerEffect({
@@ -72,7 +70,19 @@ class LayerFXViewModel extends Accessor {
         value: 0
       }),
       new LayerEffect({
+        id: "drop-shadow",
+        value: [0, 0, 0]
+      }),
+      new LayerEffect({
         id: "grayscale",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "hue-rotate",
+        value: 0
+      }),
+      new LayerEffect({
+        id: "invert",
         value: 0
       }),
       new LayerEffect({
@@ -85,10 +95,6 @@ class LayerFXViewModel extends Accessor {
       }),
       new LayerEffect({
         id: "sepia",
-        value: 0
-      }),
-      new LayerEffect({
-        id: "invert",
         value: 0
       })
     ]);

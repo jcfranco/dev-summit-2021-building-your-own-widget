@@ -74,32 +74,61 @@ class LayerFX extends Widget {
     return statements ? <pre>{statements}</pre> : null;
   }
 
+  protected renderMultiValueEffect(effect: LayerEffect, value: number[]) {
+    return value.map((val, index) => [
+      <input
+        type="range"
+        min={effect.valueTypes[index].min}
+        max={effect.valueTypes[index].max}
+        value={val}
+        oninput={(event: Event) => {
+          const target = event.target as HTMLInputElement;
+          value[index] = target.valueAsNumber;
+          effect.value = value.slice();
+        }}
+      />,
+      effect.valueTypes[index].name
+    ]);
+  }
+
+  protected renderSingleValueEffect(effect: LayerEffect, value: number) {
+    return (
+      <label>
+        <input
+          type="range"
+          min={effect.valueTypes[0].min}
+          max={effect.valueTypes[0].max}
+          value={value}
+          oninput={(event: Event) => {
+            const target = event.target as HTMLInputElement;
+            effect.value = target.valueAsNumber;
+          }}
+        />
+        Value
+      </label>
+    );
+  }
+
   // todo: can do NLS for these
   protected renderEffect(effect: LayerEffect) {
+    const { enabled, value } = effect;
     return (
       <fieldset>
+        <legend>{effect.id}</legend>
         <label>
           <input
             type="checkbox"
-            checked={effect.enabled}
+            checked={enabled}
             onchange={(event: Event) => {
               const target = event.target as HTMLInputElement;
               effect.enabled = target.checked;
             }}
           />
-          {effect.id}
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value={effect.value}
-            class="slider"
-            oninput={(event: Event) => {
-              const target = event.target as HTMLInputElement;
-              effect.value = target.valueAsNumber;
-            }}
-          />
+          Enabled
         </label>
+        {Array.isArray(value)
+          ? this.renderMultiValueEffect(effect, value)
+          : this.renderSingleValueEffect(effect, value)}
       </fieldset>
     );
   }

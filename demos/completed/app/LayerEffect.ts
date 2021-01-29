@@ -1,6 +1,6 @@
 import Accessor = require("esri/core/Accessor");
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { LayerEffectProperties, LayerEffectID, LayerEffectValue } from "./interfaces";
+import { LayerEffectProperties, LayerEffectID, LayerEffectValue, EffectValueType } from "./interfaces";
 
 @subclass("esri.demo.LayerEffect")
 class LayerEffect extends Accessor {
@@ -42,14 +42,6 @@ class LayerEffect extends Accessor {
   enabled = false;
 
   //----------------------------------
-  //  scale
-  //----------------------------------
-
-  // todo?  This could complicate things since scale would need to use effect object.
-  //@property()
-  //scale: number = null;
-
-  //----------------------------------
   //  statement
   //----------------------------------
 
@@ -62,47 +54,152 @@ class LayerEffect extends Accessor {
     return this.getEffectTemplate(id, value);
   }
 
+  //----------------------------------
+  //  valueTypes
+  //----------------------------------
+
+  @property({
+    readOnly: true
+  })
+  get valueTypes(): EffectValueType[] {
+    return this.getEffectValueTypes(this.id);
+  }
+
   //--------------------------------------------------------------------------
   //
   //  Private Methods
   //
   //--------------------------------------------------------------------------
 
-  // todo: add props for min/max?
-  getEffectTemplate(effectId: LayerEffectID, value: LayerEffectValue): string {
-    const firstValue = Array.isArray(value) ? value[0] : value;
-
-    if (typeof firstValue !== "number") {
-      return null;
-    }
-
-    // going with % when possible then px or deg depending on effect
+  getEffectValueTypes(effectId: string): EffectValueType[] {
     switch (effectId) {
       case "bloom":
-        return `bloom(${value[0]}%, ${value[1]}px, ${value[2]}%)`;
+        return [
+          {
+            name: "",
+            min: 0,
+            max: 100,
+            unit: "%"
+          },
+          {
+            name: "",
+            min: 0,
+            max: 100,
+            unit: "px"
+          },
+          {
+            name: "",
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "blur":
-        return `blur(${firstValue}px)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "px"
+          }
+        ];
       case "brightness":
-        return `brightness(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "contrast":
-        return `contrast(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "drop-shadow":
-        return `drop-shadow(${value[0]}px, ${value[1]}px, ${value[2]}px)`;
+        return [
+          {
+            name: "offsetX",
+            min: 0,
+            max: 100,
+            unit: "px"
+          },
+          {
+            name: "offsetY",
+            min: 0,
+            max: 100,
+            unit: "px"
+          },
+          {
+            name: "Blur radius",
+            min: 0,
+            max: 100,
+            unit: "px"
+          }
+        ];
       case "grayscale":
-        return `grayscale(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "hue-rotate":
-        return `hue-rotate(${firstValue}deg)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "deg"
+          }
+        ];
       case "invert":
-        return `invert(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "opacity":
-        return `opacity(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "saturate":
-        return `saturate(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       case "sepia":
-        return `sepia(${firstValue}%)`;
+        return [
+          {
+            min: 0,
+            max: 100,
+            unit: "%"
+          }
+        ];
       default:
         return null;
     }
+  }
+
+  getEffectTemplate(effectId: LayerEffectID, value: LayerEffectValue): string {
+    const isValueArray = Array.isArray(value);
+
+    const statement = this.getEffectValueTypes(effectId)
+      .map((valueType, index) => `${isValueArray ? value[index] : value}${valueType.unit}`)
+      .join(",");
+
+    return `${effectId}(${statement})`;
   }
 }
 
