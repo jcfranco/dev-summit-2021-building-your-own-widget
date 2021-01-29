@@ -31,12 +31,10 @@ export interface EffectLayer extends Layer {
   effect: string;
 }
 
-export type LayerEffectValue = number | number[];
-
 export interface LayerEffectProperties {
   id: LayerEffectID;
   name: string;
-  value: LayerEffectValue;
+  values: number[];
   enabled?: boolean;
 }
 

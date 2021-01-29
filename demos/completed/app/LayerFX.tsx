@@ -6,12 +6,6 @@ import { CSS } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
 import LayerEffect = require("./LayerEffect");
 
-// todo: vm state for view loading.
-// todo: drag and drop ordering for customizing?
-// todo: could use calcite components for customizing?
-// todo: Devsummit slide theme
-// todo: remove code view and do in customizing adding functionality.
-
 @subclass("esri.demo.LayerFX")
 class LayerFX extends Widget {
   //--------------------------------------------------------------------------
@@ -64,9 +58,7 @@ class LayerFX extends Widget {
     return (
       <div class={this.classes(CSS.root, CSS.esriWidget)}>
         <h2>{this.messages.title}</h2>
-        <div class={CSS.container}>
-          {effects.toArray().map((effect) => this.renderEffect(effect))}
-        </div>
+        <div class={CSS.container}>{effects.map(this.renderEffect).toArray()}</div>
       </div>
     );
   }
@@ -77,65 +69,87 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  protected renderMultiValueEffect(effect: LayerEffect, value: number[]) {
-    return value.map((val, index) => (
-      <label>
-        {this.messages[effect.valueTypes[index].id]}
-        <input
-          type="range"
-          min={effect.valueTypes[index].min}
-          max={effect.valueTypes[index].max}
-          value={val}
-          oninput={(event: Event) => {
-            const target = event.target as HTMLInputElement;
-            value[index] = target.valueAsNumber;
-            effect.value = value.slice();
-          }}
-        />
-      </label>
-    ));
-  }
-
-  protected renderSingleValueEffect(effect: LayerEffect, value: number) {
+  private renderEffectSliderLabel({
+    name,
+    min,
+    max,
+    value,
+    oninput
+  }: {
+    value: number;
+    min: number;
+    max: number;
+    name: string;
+    oninput: (event: Event) => void;
+  }) {
     return (
       <label>
-        {this.messages.value}
+        {name}
+        <input type="range" min={min} max={max} value={value} oninput={oninput} />
+      </label>
+    );
+  }
+
+  protected renderEffectValue(effect: LayerEffect, value: number, index: number) {
+    const { valueTypes } = effect;
+    const valueType = valueTypes[index];
+    const { name, min, max } = valueType;
+
+    return this.renderEffectSliderLabel({
+      name: name || this.messages.value,
+      min,
+      max,
+      value,
+      oninput: (event: Event) => this.updateValue(event, effect, index)
+    });
+  }
+
+  protected renderEffectValues(effect: LayerEffect) {
+    return effect.values.map((value, index) => this.renderEffectValue(effect, value, index));
+  }
+
+  protected renderEffectEnabledLabel(effect: LayerEffect) {
+    const { enabled } = effect;
+
+    return (
+      <label>
+        {this.messages.enabled}
         <input
-          type="range"
-          min={effect.valueTypes[0].min}
-          max={effect.valueTypes[0].max}
-          value={value}
-          oninput={(event: Event) => {
-            const target = event.target as HTMLInputElement;
-            effect.value = target.valueAsNumber;
-          }}
+          type="checkbox"
+          checked={enabled}
+          onchange={(event: Event) => this.updateEnabled(event, effect)}
         />
       </label>
     );
   }
 
-  protected renderEffect(effect: LayerEffect) {
-    const { enabled, value } = effect;
+  protected renderEffect = (effect: LayerEffect) => {
     return (
       <fieldset>
         <legend>{this.messages[effect.id]}</legend>
-        <label>
-          {this.messages.enabled}
-          <input
-            type="checkbox"
-            checked={enabled}
-            onchange={(event: Event) => {
-              const target = event.target as HTMLInputElement;
-              effect.enabled = target.checked;
-            }}
-          />
-        </label>
-        {Array.isArray(value)
-          ? this.renderMultiValueEffect(effect, value)
-          : this.renderSingleValueEffect(effect, value)}
+        {this.renderEffectEnabledLabel(effect)}
+        {this.renderEffectValues(effect)}
       </fieldset>
     );
-  }
+  };
+
+  //--------------------------------------------------------------------------
+  //
+  //  Private Methods
+  //
+  //--------------------------------------------------------------------------
+
+  private updateEnabled = (event: Event, effect: LayerEffect) => {
+    const target = event.target as HTMLInputElement;
+    effect.enabled = !!target.checked;
+  };
+
+  private updateValue = (event: Event, effect: LayerEffect, index: number) => {
+    const target = event.target as HTMLInputElement;
+    const value = effect.values.slice();
+    value[index] = target.valueAsNumber;
+    effect.values = value;
+  };
 }
 
 export = LayerFX;

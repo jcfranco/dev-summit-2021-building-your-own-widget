@@ -1,6 +1,6 @@
 import Accessor = require("esri/core/Accessor");
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { LayerEffectProperties, LayerEffectID, LayerEffectValue, EffectValueType } from "./interfaces";
+import { LayerEffectProperties, LayerEffectID, EffectValueType } from "./interfaces";
 
 @subclass("esri.demo.LayerEffect")
 class LayerEffect extends Accessor {
@@ -28,11 +28,11 @@ class LayerEffect extends Accessor {
   id: LayerEffectID = null;
 
   //----------------------------------
-  //  value
+  //  values
   //----------------------------------
 
   @property()
-  value: LayerEffectValue = null;
+  values: number[] = null;
 
   //----------------------------------
   //  enabled
@@ -56,9 +56,9 @@ class LayerEffect extends Accessor {
     readOnly: true
   })
   get statement(): string {
-    const { id, value } = this;
+    const { id, values } = this;
 
-    return this.getEffectTemplate(id, value);
+    return this.getEffectTemplate(id, values);
   }
 
   //----------------------------------
@@ -202,14 +202,11 @@ class LayerEffect extends Accessor {
     }
   }
 
-  getEffectTemplate(effectId: LayerEffectID, value: LayerEffectValue): string {
-    const isValueArray = Array.isArray(value);
+  getEffectTemplate(effectId: LayerEffectID, value: number[]): string {
     const valueTypes = this.getEffectValueTypes(effectId);
 
     // 50%, 12px, 50%
-    const statement = valueTypes
-      .map((valueType, index) => `${isValueArray ? value[index] : value}${valueType.unit}`)
-      .join(",");
+    const statement = valueTypes.map((valueType, index) => `${value[index]}${valueType.unit}`).join(",");
 
     // bloom(50%, 12px, 50%)
     return `${effectId}(${statement})`;
