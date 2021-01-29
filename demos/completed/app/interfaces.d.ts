@@ -34,6 +34,7 @@ export type LayerEffectValue = number | number[];
 
 export interface LayerEffectProperties {
   id: LayerEffectID;
+  name: string;
   value: LayerEffectValue;
   enabled?: boolean;
 }

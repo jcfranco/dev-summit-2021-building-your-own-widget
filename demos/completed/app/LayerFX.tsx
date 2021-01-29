@@ -56,11 +56,10 @@ class LayerFX extends Widget {
 
     return (
       <div class={this.classes(CSS.root, CSS.esriWidget)}>
-        <h2>🤘☠️ LAYER.FX ☠️🤘</h2>
+        <h2>Layer FX</h2>
         <div class={CSS.container}>
           {effects.toArray().map((effect) => this.renderEffect(effect))}
         </div>
-        {this.renderStatements()}
       </div>
     );
   }
@@ -71,32 +70,29 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  protected renderStatements() {
-    const { statements } = this.viewModel;
-
-    return statements ? <pre>{statements}</pre> : null;
-  }
-
   protected renderMultiValueEffect(effect: LayerEffect, value: number[]) {
-    return value.map((val, index) => [
-      <input
-        type="range"
-        min={effect.valueTypes[index].min}
-        max={effect.valueTypes[index].max}
-        value={val}
-        oninput={(event: Event) => {
-          const target = event.target as HTMLInputElement;
-          value[index] = target.valueAsNumber;
-          effect.value = value.slice();
-        }}
-      />,
-      effect.valueTypes[index].name
-    ]);
+    return value.map((val, index) => (
+      <label>
+        {effect.valueTypes[index].name}
+        <input
+          type="range"
+          min={effect.valueTypes[index].min}
+          max={effect.valueTypes[index].max}
+          value={val}
+          oninput={(event: Event) => {
+            const target = event.target as HTMLInputElement;
+            value[index] = target.valueAsNumber;
+            effect.value = value.slice();
+          }}
+        />
+      </label>
+    ));
   }
 
   protected renderSingleValueEffect(effect: LayerEffect, value: number) {
     return (
       <label>
+        Value
         <input
           type="range"
           min={effect.valueTypes[0].min}
@@ -107,18 +103,17 @@ class LayerFX extends Widget {
             effect.value = target.valueAsNumber;
           }}
         />
-        Value
       </label>
     );
   }
 
-  // todo: can do NLS for these
   protected renderEffect(effect: LayerEffect) {
     const { enabled, value } = effect;
     return (
       <fieldset>
-        <legend>{effect.id}</legend>
+        <legend>{effect.name}</legend>
         <label>
+          Enabled
           <input
             type="checkbox"
             checked={enabled}
@@ -127,7 +122,6 @@ class LayerFX extends Widget {
               effect.enabled = target.checked;
             }}
           />
-          Enabled
         </label>
         {Array.isArray(value)
           ? this.renderMultiValueEffect(effect, value)

@@ -42,6 +42,13 @@ class LayerEffect extends Accessor {
   enabled = false;
 
   //----------------------------------
+  //  name
+  //----------------------------------
+
+  @property()
+  name: string = null;
+
+  //----------------------------------
   //  statement
   //----------------------------------
 
