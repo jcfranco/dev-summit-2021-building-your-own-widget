@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
     "module": "amd",
+    "lib": ["ES2019", "DOM"],
     "noImplicitAny": true,
     "noEmitHelpers": true,
     "sourceMap": true,
     "jsx": "react",
     "jsxFactory": "tsx",
-    "lib": [ "dom", "es2015", "es2015.promise", "scripthost" ],
     "target": "es5",
     "experimentalDecorators": true,
     "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "importHelpers": true,
+    "moduleResolution": "node"
   },
   "include": ["./demos", "typings"],
   "exclude": ["node_modules", "**/*-final.tsx", "**/*-final.ts"]

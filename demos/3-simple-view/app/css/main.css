@@ -1,9 +1,0 @@
-@import "SimpleWidget.css";
-
-html,
-body,
-#viewDiv {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-}

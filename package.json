@@ -11,11 +11,11 @@
   },
   "homepage": "https://github.com/jcfranco/dev-summit-2021-building-your-own-widget#readme",
   "dependencies": {
-    "@types/arcgis-js-api": "~4.14.0",
-    "esri-reveal.js-templates": "git+https://github.com/esri/reveal.js.git"
+    "@types/arcgis-js-api": "~4.18.0",
+    "esri-reveal.js-templates": "git+https://github.com/esri/reveal.js.git",
+    "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "dojo-typings": "~1.11.9",
     "grunt": "~1.0.4",
     "grunt-sass": "~3.1.0",
     "prettier": "~1.19.1",

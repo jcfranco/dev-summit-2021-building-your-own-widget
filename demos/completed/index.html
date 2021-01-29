@@ -1,47 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
-    <title>ArcGIS API for JavaScript: Building Your Own Widget</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/next/esri/css/main.css" />
-    <link
-      rel="stylesheet"
-      href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css"
-    />
-    <link rel="stylesheet" href="./app/css/main.css" />
-    <style>
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-      }
-    </style>
-    <script type="text/javascript">
-      var href = location.href;
-      var demoLocation = href.slice(0, href.lastIndexOf("/"));
-      var dojoConfig = {
-        // configure loader to create demo modules (non-CDN) from the correct location.
-        packages: [
-          {
-            name: "demos",
-            location: `${demoLocation}/..`
-          },
-          {
-            name: "demo",
-            location: `${demoLocation}/app`
-          }
-        ]
-      };
-    </script>
-    <script src="https://js.arcgis.com/next"></script>
-  </head>
 
-  <body>
-    <div id="widgetDiv"></div>
-    <script>
-      require(["demo"]);
-    </script>
-  </body>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+  <title>ArcGIS API for JavaScript: Building Your Own Widget</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/css/main.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./app/css/LayerFx.css" />
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script type="text/javascript">
+    var href = location.href;
+    var demoLocation = href.slice(0, href.lastIndexOf("/"));
+    var dojoConfig = {
+      // configure loader to create demo modules (non-CDN) from the correct location.
+      packages: [
+        {
+          name: "demos",
+          location: `${demoLocation}/..`
+        },
+        {
+          name: "demo",
+          location: `${demoLocation}/app`
+        }
+      ]
+    };
+  </script>
+  <script src="https://js.arcgis.com/4.18"></script>
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "demo/LayerFX"
+    ], function (
+      Map,
+      MapView,
+      FeatureLayer,
+      LayerFX
+    ) {
+
+      const layer = new FeatureLayer({
+        url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/BLS_Monthly_Unemployment_Current_14_Months/FeatureServer/2",
+        minScale: 0,
+        maxScale: 0
+      });
+
+      const map = new Map({
+        basemap: "dark-gray-vector",
+        layers: [layer]
+      });
+
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 3
+      });
+
+      var layerFX = new LayerFX({ layer });
+
+      view.ui.add(layerFX, "top-right");
+
+      // add to window for demo
+      window.layerFX = layerFX;
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
 </html>

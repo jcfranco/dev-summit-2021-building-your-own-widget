@@ -1,17 +1,42 @@
-import Portal = require("esri/portal/Portal");
 import WidgetProperties = __esri.WidgetProperties;
 
-export interface ItemScoreProperties
-  extends ItemScoreViewModelProperties,
-    WidgetProperties {}
+import Collection = require("esri/core/Collection");
+import LayerEffect = require("./LayerEffect");
 
-export interface ItemScoreViewModelProperties {
-  portal?: Portal;
-  itemId?: string;
+export type LayerEffectID =
+  | "bloom"
+  | "blur"
+  | "brightness"
+  | "contrast"
+  | "drop-shadow"
+  | "grayscale"
+  | "hue-rotate"
+  | "invert"
+  | "opacity"
+  | "saturate"
+  | "sepia";
+
+export interface EffectValueType {
+  max: number;
+  min: number;
+  name?: string;
+  unit: "%" | "deg" | "px";
 }
 
-export interface Suggestion {
-  property: string;
-  type: "add" | "enhance";
+export type EffectLayer = Required<{ effect: string }>;
+
+export type LayerEffectValue = number | number[];
+
+export interface LayerEffectProperties {
+  id: LayerEffectID;
+  value: LayerEffectValue;
+  enabled?: boolean;
 }
 
+export type LayerEffectCollection = Collection<LayerEffect>;
+
+interface LayerFXProperties {
+  layer: EffectLayer;
+}
+
+export interface LayerFXWidgetProperties extends WidgetProperties, LayerFXProperties {}
