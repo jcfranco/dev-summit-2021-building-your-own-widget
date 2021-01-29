@@ -194,11 +194,14 @@ class LayerEffect extends Accessor {
 
   getEffectTemplate(effectId: LayerEffectID, value: LayerEffectValue): string {
     const isValueArray = Array.isArray(value);
+    const valueTypes = this.getEffectValueTypes(effectId);
 
-    const statement = this.getEffectValueTypes(effectId)
+    // 50%, 12px, 50%
+    const statement = valueTypes
       .map((valueType, index) => `${isValueArray ? value[index] : value}${valueType.unit}`)
       .join(",");
 
+    // bloom(50%, 12px, 50%)
     return `${effectId}(${statement})`;
   }
 }
