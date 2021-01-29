@@ -125,6 +125,25 @@ class LayerFXViewModel extends Accessor {
   @property({
     readOnly: true
   })
+  get statements(): string {
+    const { layer, effects } = this;
+
+    if (!layer) {
+      return;
+    }
+
+    return effects.length
+           ? effects
+             .filter((effect) => effect.enabled)
+             .map((effect) => effect.statement)
+             .toArray()
+             .join("\n")
+           : null;
+  }
+
+  @property({
+    readOnly: true
+  })
   get state(): LayerFXState {
     const { layer } = this;
 
@@ -134,25 +153,6 @@ class LayerFXViewModel extends Accessor {
   //----------------------------------
   //  statements
   //----------------------------------
-
-  @property({
-    readOnly: true
-  })
-  get statements(): string {
-    const { layer, effects } = this;
-
-    if (!layer) {
-      return;
-    }
-
-    return effects.length
-      ? effects
-          .filter((effect) => effect.enabled)
-          .map((effect) => effect.statement)
-          .toArray()
-          .join("\n")
-      : null;
-  }
 }
 
 export = LayerFXViewModel;

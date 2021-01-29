@@ -7,9 +7,3 @@ export const CSS = {
   // common
   esriWidget: "esri-widget"
 };
-
-/**
- * i18n object stores text used by our widget.
- * This can be paired with a localization library to use different languages based on the user's lcoale.
- */
-export const i18n = {};

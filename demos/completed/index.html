@@ -40,11 +40,13 @@
   <script src="https://js.arcgis.com/4.18"></script>
   <script>
     require([
+      "esri/intl",
       "esri/Map",
       "esri/views/MapView",
       "esri/layers/FeatureLayer",
       "demo/LayerFX"
     ], function (
+      intl,
       Map,
       MapView,
       FeatureLayer,
@@ -67,6 +69,18 @@
         map: map,
         center: [-100, 40],
         zoom: 3
+      });
+
+      // register message bundle loader for LayerFX messages
+      intl.registerMessageBundleLoader({
+        pattern: "esri/demo/app/",
+        async fetchMessageBundle(bundleId, locale) {
+          locale = intl.normalizeMessageBundleLocale(locale);
+          const relativePath = bundleId.replace("esri/demo/", "");
+          const bundlePath = `./${relativePath}_${locale}.json`;
+          const response = await fetch(bundlePath);
+          return response.json();
+        }
       });
 
       var layerFX = new LayerFX({ layer });

@@ -22,6 +22,7 @@ export type LayerEffectID =
 export interface EffectValueType {
   max: number;
   min: number;
+  id?: string;
   name?: string;
   unit: "%" | "deg" | "px";
 }

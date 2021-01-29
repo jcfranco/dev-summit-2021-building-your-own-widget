@@ -1,13 +1,12 @@
 import Widget = require("esri/widgets/Widget");
 import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorators";
-import { tsx } from "esri/widgets/support/widget";
+import { messageBundle, tsx } from "esri/widgets/support/widget";
 import { EffectLayer, LayerFXWidgetProperties } from "./interfaces";
-import { CSS, i18n } from "./resources";
+import { CSS } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
 import LayerEffect = require("./LayerEffect");
 
 // todo: vm state for view loading.
-// todo: i18n
 // todo: drag and drop ordering for customizing?
 // todo: could use calcite components for customizing?
 // todo: Devsummit slide theme
@@ -39,6 +38,14 @@ class LayerFX extends Widget {
   layer: EffectLayer;
 
   //----------------------------------
+  //  messages
+  //----------------------------------
+
+  @property()
+  @messageBundle("esri/demo/app/t9n/LayerFX")
+  messages: Record<string, string>;
+
+  //----------------------------------
   //  viewModel
   //----------------------------------
 
@@ -56,7 +63,7 @@ class LayerFX extends Widget {
 
     return (
       <div class={this.classes(CSS.root, CSS.esriWidget)}>
-        <h2>Layer FX</h2>
+        <h2>{this.messages.title}</h2>
         <div class={CSS.container}>
           {effects.toArray().map((effect) => this.renderEffect(effect))}
         </div>
@@ -73,7 +80,7 @@ class LayerFX extends Widget {
   protected renderMultiValueEffect(effect: LayerEffect, value: number[]) {
     return value.map((val, index) => (
       <label>
-        {effect.valueTypes[index].name}
+        {this.messages[effect.valueTypes[index].id]}
         <input
           type="range"
           min={effect.valueTypes[index].min}
@@ -92,7 +99,7 @@ class LayerFX extends Widget {
   protected renderSingleValueEffect(effect: LayerEffect, value: number) {
     return (
       <label>
-        Value
+        {this.messages.value}
         <input
           type="range"
           min={effect.valueTypes[0].min}
@@ -111,9 +118,9 @@ class LayerFX extends Widget {
     const { enabled, value } = effect;
     return (
       <fieldset>
-        <legend>{effect.name}</legend>
+        <legend>{this.messages[effect.id]}</legend>
         <label>
-          Enabled
+          {this.messages.enabled}
           <input
             type="checkbox"
             checked={enabled}

@@ -1,0 +1,19 @@
+{
+  "title": "🤘☠️ EFECTOS.DE.CAPA ☠️🤘",
+  "enabled": "Habilitado",
+  "value": "Valor",
+  "bloom": "Resplandor",
+  "blur": "Difuminar",
+  "brightness": "Brillo",
+  "contrast": "Contraste",
+  "drop-shadow": "Sombra paralela",
+  "grayscale": "Escala de grises",
+  "hue-rotate": "Tono rotar",
+  "invert": "Invertir",
+  "opacity": "Opacidad",
+  "saturate": "Saturar",
+  "sepia": "Sepia",
+  "radius": "Radio",
+  "strength": "Intensidad",
+  "threshold": "Umbral"
+}
