@@ -117,7 +117,7 @@ class LayerFXViewModel extends Accessor {
   get state(): LayerFXState {
     const { layer } = this;
 
-    return layer ? (layer.loaded ? "ready" : "loading") : "disabled";
+    return layer && "effect" in layer ? (layer.loaded ? "ready" : "loading") : "disabled";
   }
 
   //----------------------------------
