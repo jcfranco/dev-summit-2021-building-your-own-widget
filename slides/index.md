@@ -12,10 +12,11 @@
 # Agenda
 
 - Set up dev environment
+- Widget fundamentals
 - Develop
-  - `ItemScore` Class
+  - `Settings` Class
   - Simple Widget
-  - `ItemScore` Widget
+  - `SettingsPanel` Widget
 
 ---
 
@@ -126,10 +127,84 @@ const shorthand = { person };
 const me = new Person({ name: "Franco", age: 33 });
 
 // watch for changes to `age`
-me.watch("age", singHappyBirthday);
+me.watch("age", () => console.log("happy birthday!"));
+
+// watch for changes to `age`
+me.watch("age", () => console.log("happy birthday!"));
 ```
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+# `esri/core/Accessor`
+
+- Unified object constructor
+
+```ts
+class Person extends Accessor {
+  @property()
+  name: string;
+
+  @property()
+  age: number;
+}
+
+const self = new Person({ name: "Franco", age: 33 });
+
+console.log(self.name, self.age); // Franco, 33 
+```
+
+---
+
+# `esri/core/Accessor`
+
+- Watch properties
+
+```ts
+const self = new Person({ name: "Franco", age: 33 });
+
+// watch for changes to `age`
+self.watch("age", () => console.log("happy birthday!"));
+```
+
+---
+
+# `esri/core/Accessor`
+
+- Alias properties
+
+```ts
+class Person extends Accessor {
+  // ...
+  
+  @property({ aliasOf: "age" })
+  yearsAlive: number;
+}
+
+const self = new Person({ name: "Franco", age: 33 });
+
+// watch for changes to `age`
+console.log(self.yearsAlive); // 33 
+```
+
+---
+
+# `esri/core/Accessor`
+
+- Autocast™ (easy class instantiation)
+
+```ts
+class House extends Accessor {
+  @property({ type: Person })
+  owner: Person;
+}
+
+const house = new House({ owner: { name: "Franco", age: 33 }});
+
+// house.owner is an instance of Person
+console.log(house.owner.yearsAlive); // 33 
+```
 
 ---
 
@@ -137,9 +212,9 @@ me.watch("age", singHappyBirthday);
 
 # Demo: Background
 
-Inspired by ArcGIS Item Page
+Inspired by [`Intro to layer effect` sample](https://developers.arcgis.com/javascript/latest/sample-code/intro-effect-layer/)
 
-<a target="_blank" href="https://jsapi.maps.arcgis.com/home/item.html?id=f5a89635bb394f7da2f9c82cdd73e459" ><img src="img/ago-item-page.png" height=300 /></a>
+<a target="_blank" href="https://developers.arcgis.com/javascript/latest/sample-code/intro-effect-layer/"><img src="img/layer-effect-sample.png" height=600 /></a>
 
 ---
 
@@ -147,11 +222,8 @@ Inspired by ArcGIS Item Page
 
 Requirements
 
-- Need to load an item
-- Allow editing item properties
-- Highlight the item's score
-- Provide suggestions to improve item's score
-- Save an item
+- Allows configuring layer effects
+- Updating effects should be applied to the layer  
 
 ---
 
@@ -159,55 +231,43 @@ Requirements
 
 # Demo: Background
 
-Exploring the Item structure
+Exploring the Layer Effects API
 
-<a target="_blank" href="https://developers.arcgis.com/rest/users-groups-and-items/item.htm" ><img src="img/arcgis-rest-api-item.png" height=300 /></a>
-
-[ArcGIS REST API - Item](https://developers.arcgis.com/rest/users-groups-and-items/item.htm)
-
----
-
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
-
-# Demo: Background
-
-Exploring the JS API `PortalItem` class
-
-<a target="_blank" href="https://developers.arcgis.com/javascript/latest/api-reference/esri-portal-PortalItem.html"><img src="img/jsapi-portal-item.png" height=300 /></a>
-
-[ArcGIS JavaScript API - PortalItem](https://developers.arcgis.com/javascript/latest/api-reference/esri-portal-PortalItem.html)
+[`FeatureLayer#effect`](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#effect)
+[`FeatureEffect`](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html#Effect)
+[CSS filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
 
 ---
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
-# Demo: [`ItemScore` Class API](../demos/2-custom-class/)
+# Demo: [`LayerFX` Class API](../demos/2-custom-class/)
 
 ```ts
-interface ItemScore extends Accessor {
-  portal: Portal;
-  itemId: string;
-  readonly suggestions: { name: string; type: "add" | "enhance" }[];
-
-  title: string;
-  summary: string;
-  description: string;
-  tags: string;
-  termsOfUse: string;
-  thumbnail: string;
-
-  load(): Promise<void>;
-  save(): Promise<void>;
+interface LayerFX extends Accessor {
+  layer: EffectLayer;
+  readonly effects: Collection<LayerEffect>;
+  readonly statements: string;
 }
+
+interface LayerEffect {
+  id:  LayerEffectId;
+  value: LayerEffectValue;
+  readonly statement: string;
+}
+
+type EffectLayer = { effect: string; }
+type LayerEffectId = "bloom" | | "blur" | "brightness" | ... | "saturate" | "sepia";
+type LayerEffectValue = number | number[]
 ```
 
 ---
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
-# Demo Recap: `ItemScore` Class
+# Demo Recap: `LayerFX` Class
 
-- Implemented `ItemScore`
+- Implemented `LayerFX`
   - Extended `esri/core/Accessor`
   - Created properties with `@property`
   - Typed constructor arguments
@@ -259,6 +319,7 @@ interface ItemScore extends Accessor {
 - `constructor`
 - `postInitialize`
 - `render`
+  - `when()` before first render
 - `destroy`
 
 ---
@@ -268,6 +329,7 @@ interface ItemScore extends Accessor {
 - Defines UI
 - Reacts to state changes
 - Uses JSX (VDOM)
+- <!-- .element: class="fragment" data-fragment-index="1" -->Will automatically re-render on property updates ✨new✨
 
 ---
 
@@ -297,7 +359,7 @@ Develop a simple widget
 
 - Extended `esri/widgets/Widget`
 - Implemented `render()`
-- Added a `renderable()` property
+- Added a renderable `property()`
 - Added `onclick` event
 - Added CSS Object + [BEM Methodology](http://getbem.com/)
 - Toggled property with event to re-render
@@ -332,7 +394,7 @@ Develop a simple widget
 
 # ViewModels
 
-- `ItemScore` class example
+- `LayerFX` class example
 - Extend `esri/core/Accessor`
 - Provide APIs to support View
 - Focus on business logic
@@ -352,7 +414,7 @@ Develop a simple widget
 
 ---
 
-# Let's create `ItemScore` Widget
+# Let's create `LayerFX` Widget
 
 [<img src="img/completed-demo.png" height=500 />](../demos/completed/)
 
@@ -361,9 +423,10 @@ Develop a simple widget
 # Demo VM Interface
 
 ```ts
-interface ItemScore extends Accessor {
-  // ✨ new ✨
-  state: "idle" | "loading" | "ready";
+interface LayerFXViewModel extends Accessor {
+  layer: EffectLayer;
+  readonly effects: Collection<LayerEffect>;
+  readonly statements: string;
 }
 ```
 
@@ -372,9 +435,9 @@ interface ItemScore extends Accessor {
 # Demo: View Interface
 
 ```ts
-interface ItemScore extends Widget {
-  portal: Portal;
-  itemId: string;
+interface LayerFX extends Widget {
+  layer: EffectLayer;
+  viewModel: LayerFXViewModel;
 }
 ```
 
@@ -384,9 +447,7 @@ interface ItemScore extends Widget {
 
 # Demo: Styling
 
-<img src="img/calcite-web.png" height=500 />
-
-[Calcite Web](http://esri.github.io/calcite-web/)
+[Esri's Design System components](https://esri.github.io/calcite-components)
 
 ---
 
@@ -394,9 +455,9 @@ interface ItemScore extends Widget {
 
 # Demo: [Updated View](../demos/4-custom-widget/)
 
-- Use `ItemScore` class as `ItemScoreViewModel`
+- Use `LayerFX` class as `LayerFXViewModel`
   - Add a state property
-- Create `ItemScore` view
+- Create `LayerFX` view
   - Alias VM properties
   - Create BEM classes object
   - Render sections
@@ -420,8 +481,8 @@ interface ItemScore extends Widget {
 # Final Recap
 
 - Set up dev environment
-- Wrote `ItemScore` class
-- Developed a `ItemScore` Widget
+- Wrote `LayerFX` class
+- Developed a `LayerFX` Widget
 
 ---
 
@@ -438,11 +499,6 @@ interface ItemScore extends Widget {
 
 ## You might also be interested in...
 
-- ArcGIS API for JavaScript: Getting Started with Web Development
-- ArcGIS API for JavaScript: 2D Visualization
-- ArcGIS API for JavaScript: Using TypeScript
-- ArcGIS API for JavaScript: Tips and Tricks for Developing and Debugging Apps
-- Building Light-Weight Map Authoring Web Apps
 - Customizing the ArcGIS API for JavaScript Widgets
 
 ---
