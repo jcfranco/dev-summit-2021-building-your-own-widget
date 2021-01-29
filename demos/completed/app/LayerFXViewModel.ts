@@ -3,7 +3,7 @@ import Collection = require("esri/core/Collection");
 import Handles = require("esri/core/Handles"); // handleowner wasn't working :(
 import { watch } from "esri/core/watchUtils";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { EffectLayer, LayerFXProperties, LayerEffectCollection } from "./interfaces";
+import { EffectLayer, LayerFXProperties, LayerEffectCollection, LayerFXState } from "./interfaces";
 import LayerEffect = require("./LayerEffect");
 
 const FXCollection = Collection.ofType(LayerEffect);
@@ -106,6 +106,19 @@ class LayerFXViewModel extends Accessor {
 
   @property()
   layer: EffectLayer = null;
+
+  //----------------------------------
+  //  state
+  //----------------------------------
+
+  @property({
+    readOnly: true
+  })
+  get state(): LayerFXState {
+    const { layer } = this;
+
+    return layer ? (layer.loaded ? "ready" : "loading") : "disabled";
+  }
 
   //----------------------------------
   //  statements

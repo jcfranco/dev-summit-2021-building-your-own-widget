@@ -6,9 +6,12 @@ import { CSS, i18n } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
 import LayerEffect = require("./LayerEffect");
 
+// todo: vm state for view loading.
 // todo: i18n
 // todo: drag and drop ordering for customizing?
 // todo: could use calcite components for customizing?
+// todo: Devsummit slide theme
+// todo: remove code view and do in customizing adding functionality.
 
 @subclass("esri.demo.LayerFX")
 class LayerFX extends Widget {
