@@ -56,7 +56,7 @@ class LayerFX extends Widget {
     const { effects } = this.viewModel;
 
     return (
-      <div class={this.classes(CSS.root, CSS.esriWidget)}>
+      <div class={this.classes(CSS.root, CSS.esriWidget, CSS.esriWidgetPanel)}>
         <h2>{this.messages.title}</h2>
         <div class={CSS.container}>{effects.map(this.renderEffect).toArray()}</div>
       </div>
@@ -84,8 +84,15 @@ class LayerFX extends Widget {
   }) {
     return (
       <label>
-        {name}
-        <input type="range" min={min} max={max} value={value} oninput={oninput} />
+        {name}:
+        <input
+          class={CSS.slider}
+          type="range"
+          min={min}
+          max={max}
+          value={value}
+          oninput={oninput}
+        />
       </label>
     );
   }
@@ -113,8 +120,9 @@ class LayerFX extends Widget {
 
     return (
       <label>
-        {this.messages.enabled}
+        {this.messages[effect.id]}
         <input
+          class={CSS.checkbox}
           type="checkbox"
           checked={enabled}
           onchange={(event: Event) => this.updateEnabled(event, effect)}
@@ -125,9 +133,8 @@ class LayerFX extends Widget {
 
   protected renderEffect = (effect: LayerEffect) => {
     return (
-      <fieldset>
-        <legend>{this.messages[effect.id]}</legend>
-        {this.renderEffectEnabledLabel(effect)}
+      <fieldset disabled={!effect.enabled}>
+        <legend>{this.renderEffectEnabledLabel(effect)}</legend>
         {this.renderEffectValues(effect)}
       </fieldset>
     );
