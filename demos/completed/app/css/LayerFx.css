@@ -26,7 +26,6 @@
 .layer-fx fieldset[disabled] legend label,
 .layer-fx fieldset legend label {
   color: #f20530;
-  font-weight: bold;
 }
 
 .layer-fx fieldset {
@@ -49,6 +48,7 @@
   margin: 0 0 0.5rem 0;
   padding: 0;
   color: #f2b705;
+  font-weight: bold;
 }
 
 .layer-fx__slider {
