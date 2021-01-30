@@ -23,11 +23,6 @@
   overflow: auto;
 }
 
-.layer-fx fieldset[disabled] legend label,
-.layer-fx fieldset legend label {
-  color: #f20530;
-}
-
 .layer-fx fieldset {
   margin: 1rem 0;
   padding: 1rem;
@@ -49,6 +44,9 @@
   padding: 0;
   color: #f2b705;
   font-weight: bold;
+}
+.layer-fx label:hover {
+  color: #f20530;
 }
 
 .layer-fx__slider {
