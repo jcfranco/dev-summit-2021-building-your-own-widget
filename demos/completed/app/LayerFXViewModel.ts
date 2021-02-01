@@ -66,12 +66,12 @@ class LayerFXViewModel extends Accessor {
       new LayerEffect({
         id: "brightness",
         name: "Brightness",
-        values: [0]
+        values: [100]
       }),
       new LayerEffect({
         id: "contrast",
         name: "Contrast",
-        values: [0]
+        values: [100]
       }),
       new LayerEffect({
         id: "drop-shadow",
@@ -96,12 +96,12 @@ class LayerFXViewModel extends Accessor {
       new LayerEffect({
         id: "opacity",
         name: "Opacity",
-        values: [0]
+        values: [100]
       }),
       new LayerEffect({
         id: "saturate",
         name: "Saturate",
-        values: [0]
+        values: [100]
       }),
       new LayerEffect({
         id: "sepia",
