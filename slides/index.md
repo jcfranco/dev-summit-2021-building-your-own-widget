@@ -320,7 +320,7 @@ type LayerEffectValue = number | number[]
 - `constructor`
 - `postInitialize`
 - `render`
-  - `when()` before first render
+  - `when()` after first render
 - `destroy`
 
 ---
