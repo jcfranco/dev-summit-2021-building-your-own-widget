@@ -1,7 +1,6 @@
 {
   "title": "Efectors de Capa",
   "summary": "Layer.effect proporciona varias funciones de filtro que se pueden realizar en la capa para lograr diferentes efectos visuales similares a cómo funcionan los filtros de imagen.",
-  "enabled": "Habilitado",
   "value": "Valor",
   "bloom": "Resplandor",
   "blur": "Difuminar",
