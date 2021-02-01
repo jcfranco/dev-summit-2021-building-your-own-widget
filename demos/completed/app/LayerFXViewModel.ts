@@ -1,12 +1,12 @@
 import Accessor = require("esri/core/Accessor");
 import Collection = require("esri/core/Collection");
-import Handles = require("esri/core/Handles"); // handleowner wasn't working :(
+import Handles = require("esri/core/Handles");
 import { watch } from "esri/core/watchUtils";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
 import { EffectLayer, LayerFXProperties, LayerEffectCollection, LayerFXState } from "./interfaces";
 import LayerEffect = require("./LayerEffect");
 
-const FXCollection = Collection.ofType(LayerEffect);
+const LayerEffectCollection = Collection.ofType(LayerEffect);
 
 @subclass("esri.demo.LayerFXViewModel")
 class LayerFXViewModel extends Accessor {
@@ -21,7 +21,7 @@ class LayerFXViewModel extends Accessor {
   }
 
   initialize(): void {
-    this.handles.add([watch(this, "statements", (statements) => (this.layer.effect = statements))]);
+    this.handles.add(watch(this, "statements", (statements) => (this.layer.effect = statements)));
   }
 
   destroy() {
@@ -52,7 +52,7 @@ class LayerFXViewModel extends Accessor {
     type: Collection.ofType(LayerEffect)
   })
   get effects(): LayerEffectCollection {
-    return new FXCollection([
+    return new LayerEffectCollection([
       new LayerEffect({
         id: "bloom",
         name: "Bloom",
@@ -125,6 +125,20 @@ class LayerFXViewModel extends Accessor {
   @property({
     readOnly: true
   })
+  get state(): LayerFXState {
+    const { layer } = this;
+    const supportedLayer = layer && "effect" in layer;
+
+    return supportedLayer ? (layer.loaded ? "ready" : "loading") : "disabled";
+  }
+
+  //----------------------------------
+  //  statements
+  //----------------------------------
+
+  @property({
+    readOnly: true
+  })
   get statements(): string {
     const { layer, effects } = this;
 
@@ -140,19 +154,6 @@ class LayerFXViewModel extends Accessor {
           .join("\n")
       : null;
   }
-
-  @property({
-    readOnly: true
-  })
-  get state(): LayerFXState {
-    const { layer } = this;
-
-    return layer && "effect" in layer ? (layer.loaded ? "ready" : "loading") : "disabled";
-  }
-
-  //----------------------------------
-  //  statements
-  //----------------------------------
 }
 
 export = LayerFXViewModel;

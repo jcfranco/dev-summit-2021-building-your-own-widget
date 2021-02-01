@@ -1,10 +1,10 @@
-import Widget = require("esri/widgets/Widget");
 import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorators";
 import { messageBundle, tsx } from "esri/widgets/support/widget";
 import { EffectLayer, LayerFXWidgetProperties } from "./interfaces";
 import { CSS } from "./resources";
 import LayerFXViewModel = require("./LayerFXViewModel");
 import LayerEffect = require("./LayerEffect");
+import Widget = require("esri/widgets/Widget");
 
 @subclass("esri.demo.LayerFX")
 class LayerFX extends Widget {
@@ -69,7 +69,7 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  private renderEffectSliderLabel({
+  private renderEffectSliderLabel = ({
     name,
     min,
     max,
@@ -81,7 +81,7 @@ class LayerFX extends Widget {
     max: number;
     name: string;
     oninput: (event: Event) => void;
-  }) {
+  }) => {
     return (
       <label>
         {name}:
@@ -95,9 +95,9 @@ class LayerFX extends Widget {
         />
       </label>
     );
-  }
+  };
 
-  protected renderEffectValue(effect: LayerEffect, value: number, index: number) {
+  protected renderEffectValue = (effect: LayerEffect, value: number, index: number) => {
     const { valueTypes } = effect;
     const valueType = valueTypes[index];
     const { name, min, max } = valueType;
@@ -109,13 +109,13 @@ class LayerFX extends Widget {
       value,
       oninput: (event: Event) => this.updateValue(event, effect, index)
     });
-  }
+  };
 
-  protected renderEffectValues(effect: LayerEffect) {
+  protected renderEffectValues = (effect: LayerEffect) => {
     return effect.values?.map((value, index) => this.renderEffectValue(effect, value, index));
-  }
+  };
 
-  protected renderEffectEnabledLabel(effect: LayerEffect) {
+  protected renderEffectEnabledLabel = (effect: LayerEffect) => {
     const { enabled } = effect;
 
     return (
@@ -129,7 +129,7 @@ class LayerFX extends Widget {
         />
       </label>
     );
-  }
+  };
 
   protected renderEffect = (effect: LayerEffect) => {
     return (
