@@ -522,6 +522,9 @@ Supporting other languages
 ## You might also be interested in...
 
 - Customizing the ArcGIS API for JavaScript Widgets
+- ArcGIS API for JavaScript: Getting Started with Web Development
+- ArcGIS API for JavaScript: Programming Patterns and API Fundamentals
+- Accessible Web Mapping Apps: ARIA, WCAG and 508 Compliance
 
 ---
 
