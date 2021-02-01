@@ -9,13 +9,18 @@
   margin: 0;
   background-color: #0442bf;
   border: 1px solid #116ebf;
+  color: #fff;
 }
 
 .layer-fx h2 {
   text-align: center;
   margin: 0 0 0.5rem 0;
   padding: 0;
-  color: #fff;
+}
+
+.layer-fx p {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
 }
 
 .layer-fx__container {

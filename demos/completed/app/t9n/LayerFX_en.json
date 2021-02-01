@@ -1,5 +1,7 @@
 {
   "title": "Layer FX",
+  "summary": "Layer.effect provides various filter functions that can be performed on the layer to achieve different visual effects similar to how image filters work.",
+  "enabled": "Enabled",
   "value": "Value",
   "bloom": "Bloom",
   "blur": "Blur",

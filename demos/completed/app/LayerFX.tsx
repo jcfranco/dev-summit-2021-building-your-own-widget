@@ -58,6 +58,7 @@ class LayerFX extends Widget {
     return (
       <div class={this.classes(CSS.root, CSS.esriWidget, CSS.esriWidgetPanel)}>
         <h2>{this.messages.title}</h2>
+        <p>{this.messages.summary}</p>
         <div class={CSS.container}>{effects.map(this.renderEffect).toArray()}</div>
       </div>
     );
