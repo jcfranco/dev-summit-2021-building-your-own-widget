@@ -17,6 +17,7 @@
   - `Settings` Class
   - Simple Widget
   - `SettingsPanel` Widget
+- Going further
 
 ---
 
@@ -478,11 +479,32 @@ interface LayerFX extends Widget {
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
+---
+
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
+
+# Going further
+
+Supporting other languages
+
+- Message bundles (translations: `t9n`)
+  - loader
+  - `@messageBundle`
+
+---
+
+# Demo: [Supporting other locales](../demos/5-custom-widget-with-t9n/)
+
+---
+
+<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
+
 # Final Recap
 
 - Set up dev environment
 - Wrote `LayerFX` class
 - Developed a `LayerFX` Widget
+- Enhanced `LayerFX` Widget
 
 ---
 
