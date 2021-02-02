@@ -70,7 +70,7 @@ class LayerFX extends Widget {
   //
   //--------------------------------------------------------------------------
 
-  private renderEffectSliderLabel = ({
+  protected renderEffectSliderLabel = ({
     enabled,
     name,
     min,
