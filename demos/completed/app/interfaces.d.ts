@@ -28,7 +28,7 @@ export interface EffectValueType {
 }
 
 export interface EffectLayer extends Layer {
-  effect: string;
+  effect: any;
 }
 
 export interface LayerEffectProperties {
