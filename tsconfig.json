@@ -3,17 +3,17 @@
     "module": "amd",
     "lib": ["ES2019", "DOM"],
     "noImplicitAny": true,
-    "noEmitHelpers": true,
+    "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
     "jsxFactory": "tsx",
-    "esModuleInterop": true,
     "target": "es5",
     "experimentalDecorators": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
     "importHelpers": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noEmitHelpers": true
   },
   "include": ["./demos", "typings"],
   "exclude": ["node_modules", "**/*-final.tsx", "**/*-final.ts"]
