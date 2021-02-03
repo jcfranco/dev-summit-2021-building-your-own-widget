@@ -14,9 +14,9 @@
 - Set up dev environment
 - Widget fundamentals
 - Develop
-  - `Settings` Class
+  - `LayerFX` Class
   - Simple Widget
-  - `SettingsPanel` Widget
+  - `LayerFX` Widget
 - Going further
 
 ---
@@ -62,7 +62,7 @@ greet(person); // Hello Franco!
 
 ---
 
-# JS of the future, now
+# Modern JS
 
 ```ts
 // let and const
@@ -153,7 +153,7 @@ class Person extends Accessor {
 
 const self = new Person({ name: "Franco", age: 33 });
 
-console.log(self.name, self.age); // Franco, 33 
+console.log(self.name, self.age); // Franco, 33
 ```
 
 ---
@@ -178,7 +178,7 @@ self.watch("age", () => console.log("happy birthday!"));
 ```ts
 class Person extends Accessor {
   // ...
-  
+
   @property({ aliasOf: "age" })
   yearsAlive: number;
 }
@@ -186,7 +186,7 @@ class Person extends Accessor {
 const self = new Person({ name: "Franco", age: 33 });
 
 // watch for changes to `age`
-console.log(self.yearsAlive); // 33 
+console.log(self.yearsAlive); // 33
 ```
 
 ---
@@ -201,10 +201,10 @@ class House extends Accessor {
   owner: Person;
 }
 
-const house = new House({ owner: { name: "Franco", age: 33 }});
+const house = new House({ owner: { name: "Franco", age: 33 } });
 
 // house.owner is an instance of Person
-console.log(house.owner.yearsAlive); // 33 
+console.log(house.owner.yearsAlive); // 33
 ```
 
 ---
@@ -224,7 +224,7 @@ Inspired by [`Intro to layer effect` sample](https://developers.arcgis.com/javas
 Requirements
 
 - Allows configuring layer effects
-- Updating effects should be applied to the layer  
+- Updating effects should be applied to the layer
 
 ---
 
@@ -246,20 +246,19 @@ Exploring the Layer Effects API
 
 ```ts
 interface LayerFX extends Accessor {
-  layer: EffectLayer;
+  layer: Layer;
   readonly effects: Collection<LayerEffect>;
+  readonly state: string;
   readonly statements: string;
 }
 
 interface LayerEffect {
-  id:  LayerEffectId;
-  value: LayerEffectValue;
+  enabled: boolean;
+  id: string;
+  values: number[];
+  valueTypes: object[]; // id, min, max, unit
   readonly statement: string;
 }
-
-type EffectLayer = { effect: string; }
-type LayerEffectId = "bloom" | | "blur" | "brightness" | ... | "saturate" | "sepia";
-type LayerEffectValue = number | number[]
 ```
 
 ---
@@ -272,7 +271,7 @@ type LayerEffectValue = number | number[]
   - Extended `esri/core/Accessor`
   - Created properties with `@property`
   - Typed constructor arguments
-  - Created public + private methods
+  - Created methods
 
 ---
 
@@ -425,8 +424,9 @@ Develop a simple widget
 
 ```ts
 interface LayerFXViewModel extends Accessor {
-  layer: EffectLayer;
+  layer: Layer;
   readonly effects: Collection<LayerEffect>;
+  readonly state: string;
   readonly statements: string;
 }
 ```
@@ -438,6 +438,7 @@ interface LayerFXViewModel extends Accessor {
 ```ts
 interface LayerFX extends Widget {
   layer: EffectLayer;
+  messages: Record<string, string>;
   viewModel: LayerFXViewModel;
 }
 ```
