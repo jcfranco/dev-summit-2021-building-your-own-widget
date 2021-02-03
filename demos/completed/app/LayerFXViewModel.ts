@@ -55,57 +55,46 @@ class LayerFXViewModel extends Accessor {
     return new LayerEffectCollection([
       new LayerEffect({
         id: "bloom",
-        name: "Bloom",
         values: [0, 0, 0]
       }),
       new LayerEffect({
         id: "blur",
-        name: "Blur",
         values: [0]
       }),
       new LayerEffect({
         id: "brightness",
-        name: "Brightness",
         values: [100]
       }),
       new LayerEffect({
         id: "contrast",
-        name: "Contrast",
         values: [100]
       }),
       new LayerEffect({
         id: "drop-shadow",
-        name: "Drop shadow",
         values: [0, 0, 0]
       }),
       new LayerEffect({
         id: "grayscale",
-        name: "Grayscale",
         values: [0]
       }),
       new LayerEffect({
         id: "hue-rotate",
-        name: "Hue rotate",
         values: [0]
       }),
       new LayerEffect({
         id: "invert",
-        name: "Invert",
         values: [0]
       }),
       new LayerEffect({
         id: "opacity",
-        name: "Opacity",
         values: [100]
       }),
       new LayerEffect({
         id: "saturate",
-        name: "Saturate",
         values: [100]
       }),
       new LayerEffect({
         id: "sepia",
-        name: "Sepia",
         values: [0]
       })
     ]);

@@ -32,7 +32,6 @@ export interface EffectLayer extends Layer {
 
 export interface LayerEffectProperties {
   id: LayerEffectID;
-  name: string;
   values: number[];
   enabled?: boolean;
 }
