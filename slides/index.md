@@ -213,7 +213,7 @@ console.log(house.owner.yearsAlive); // 33
 
 # Demo: Background
 
-Inspired by [`Intro to layer effect` sample](https://developers.arcgis.com/javascript/latest/sample-code/intro-effect-layer/)
+Inspired by [Intro to layer effect](https://developers.arcgis.com/javascript/latest/sample-code/intro-effect-layer/) sample
 
 <a target="_blank" href="https://developers.arcgis.com/javascript/latest/sample-code/intro-effect-layer/"><img src="img/layer-effect-sample.png" height=600 /></a>
 
@@ -248,7 +248,6 @@ Exploring the Layer Effects API
 interface LayerFX extends Accessor {
   layer: Layer;
   readonly effects: Collection<LayerEffect>;
-  readonly state: string;
   readonly statements: string;
 }
 
@@ -256,7 +255,7 @@ interface LayerEffect {
   enabled: boolean;
   id: "bloom" | "blur" | ... | "sepia";
   values: number[];
-  valueTypes: EffectValueType[]; // id, min, max, unit
+  readonly valueTypes: { unit: string; ... }[];
   readonly statement: string;
 }
 ```
