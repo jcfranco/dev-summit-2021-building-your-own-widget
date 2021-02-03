@@ -38,7 +38,7 @@ export interface LayerEffectProperties {
 
 export type LayerEffectCollection = Collection<LayerEffect>;
 
-interface LayerFXProperties {
+export interface LayerFXProperties {
   layer: EffectLayer;
 }
 

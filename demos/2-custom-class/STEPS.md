@@ -4,269 +4,220 @@
 
 Let's start off by looking at some boilerplate for creating a module or class.
 
-See `app/ItemScore.ts`
+See `app/LayerFX.ts`
+See `app/LayerEffect.ts`
 
 This is the minimum required to create a class in 4x. All we're doing here is creating a class that extends `esri/core/Accessor`, which is the base of all 4x classes.
 
-Notes:
+## LayerEffect
 
-- We can use an internal property to expose a subset of `PortalItem` properties. `@property({ aliasOf: "item.<propName>" }` can help us do this for each aliased properties.
-- We can also use TypeScript to use the same types for our aliased properties without needing to redeclare each one.
-
-## Import dependencies
+### Import dependencies
 
 ```ts
-import Portal = require("esri/portal/Portal");
-import PortalItem = require("esri/portal/PortalItem");
-import { ItemScoreProperties, Suggestion } from "./interfaces";
-import EsriError = require("esri/core/Error");
-import request = require("esri/request");
+import { getEffectValueTypes } from "./layerFXUtils";
+```
+
+### Add props
+
+```ts
+//----------------------------------
+//  enabled
+//----------------------------------
+
+@property()
+enabled = false;
+
+//----------------------------------
+//  id
+//----------------------------------
+
+@property()
+id: LayerEffectID = null;
+
+//----------------------------------
+//  values
+//----------------------------------
+
+@property()
+values: number[] = null;
+
+//----------------------------------
+//  valueTypes
+//----------------------------------
+
+@property({
+  readOnly: true
+})
+get valueTypes(): EffectValueType[] {
+  return getEffectValueTypes(this.id);
+}
+
+//----------------------------------
+//  statement
+//----------------------------------
+
+@property({
+  readOnly: true
+})
+get statement(): string {
+  return this.getEffectTemplate(this.id, this.values);
+}
+```
+
+### Add Private methods
+
+```ts
+//--------------------------------------------------------------------------
+//
+//  Private Methods
+//
+//--------------------------------------------------------------------------
+
+getEffectTemplate(effectId: LayerEffectID, value: number[]): string {
+  // 50%, 12px, 50%
+  const statement = this.valueTypes.map((valueType, index) => `${value[index]}${valueType.unit}`).join(",");
+
+  // bloom(50%, 12px, 50%)
+  return `${effectId}(${statement})`;
+}
+```
+
+## LayerFX
+
+### Import dependencies
+
+```ts
+import Collection from "esri/core/Collection";
+import Handles from "esri/core/Handles";
+import { watch } from "esri/core/watchUtils";
+import LayerEffect from "./LayerEffect";
+
+const LayerEffectCollection = Collection.ofType(LayerEffect);
+```
+
+### Add vars
+
+```ts
+//--------------------------------------------------------------------------
+//
+//  Variables
+//
+//--------------------------------------------------------------------------
+
+handles = new Handles();
+```
+
+### Add props
+
+```ts
+//----------------------------------
+//  effects
+//----------------------------------
+
+@property({
+  readOnly: true,
+  type: Collection.ofType(LayerEffect)
+})
+get effects(): LayerEffectCollection {
+  return new LayerEffectCollection([
+    new LayerEffect({
+      id: "bloom",
+      values: [0, 0, 0]
+    }),
+    new LayerEffect({
+      id: "blur",
+      values: [0]
+    }),
+    new LayerEffect({
+      id: "brightness",
+      values: [100]
+    }),
+    new LayerEffect({
+      id: "contrast",
+      values: [100]
+    }),
+    new LayerEffect({
+      id: "drop-shadow",
+      values: [0, 0, 0]
+    }),
+    new LayerEffect({
+      id: "grayscale",
+      values: [0]
+    }),
+    new LayerEffect({
+      id: "hue-rotate",
+      values: [0]
+    }),
+    new LayerEffect({
+      id: "invert",
+      values: [0]
+    }),
+    new LayerEffect({
+      id: "opacity",
+      values: [100]
+    }),
+    new LayerEffect({
+      id: "saturate",
+      values: [100]
+    }),
+    new LayerEffect({
+      id: "sepia",
+      values: [0]
+    })
+  ]);
+}
+
+//----------------------------------
+//  layer
+//----------------------------------
+
+@property()
+layer: EffectLayer = null;
+
+//----------------------------------
+//  statements
+//----------------------------------
+
+@property({
+  readOnly: true
+})
+get statements(): string {
+  const { effects } = this;
+
+  return effects.length
+    ? effects
+        .filter((effect) => effect.enabled)
+        .map((effect) => effect.statement)
+        .toArray()
+        .join("\n")
+    : null;
+}
 ```
 
 We've now implemented the properties from our API design. Properties defined this way can be watched for changes and initialized by a constructor object.
 
-## Add vars
+### Import missing interfaces
+
+```
+import `LayerEffectCollection` and `EffectLayer` from interfaces
+```
+
+### Add lifecycle methods for handles
 
 ```ts
-@property()
-private item: PortalItem;
+initialize(): void {
+  this.handles.add(watch(this, "statements", (statements) => (this.layer.effect = statements)));
+}
 
-```
-
-## Add props
-
-```ts
-//----------------------------------
-//  portal
-//----------------------------------
-
-@property()
-portal: Portal = Portal.getDefault();
-
-//----------------------------------
-//  itemId
-//----------------------------------
-
-@property()
-itemId: string;
-
-//----------------------------------
-//  description
-//----------------------------------
-
-@property({
-  aliasOf: "item.description"
-})
-description: PortalItem["description"];
-
-//----------------------------------
-//  score
-//----------------------------------
-
-@property({
-  aliasOf: "item.sourceJSON.scoreCompleteness",
-  readOnly: true
-})
-readonly score: number;
-
-//----------------------------------
-//  summary
-//----------------------------------
-
-@property({
-  aliasOf: "item.snippet"
-})
-summary: PortalItem["snippet"];
-
-//----------------------------------
-//  suggestions
-//----------------------------------
-
-@property({
-  readOnly: true
-})
-readonly suggestions: Suggestion[] = [];
-
-//----------------------------------
-//  tags
-//----------------------------------
-
-@property({
-  aliasOf: "item.tags"
-})
-tags: PortalItem["tags"];
-
-//----------------------------------
-//  termsOfUse
-//----------------------------------
-
-@property({
-  aliasOf: "item.licenseInfo"
-})
-termsOfUse: PortalItem["licenseInfo"];
-
-//----------------------------------
-//  thumbnail
-//----------------------------------
-
-@property()
-thumbnail: Blob;
-
-//----------------------------------
-//  title
-//----------------------------------
-
-@property({
-  aliasOf: "item.title"
-})
-title: PortalItem["title"];
-```
-
-## Setup Constructor
-
-Next, we'll define our constructor to allow passing an arguments object to initialize our class. We can leverage TypeScript and type the constructor argument to ensure our class is created with the correct properties. We'll use an interface we prepared beforehand.
-
-```ts
-constructor(props?: ItemScoreProperties) {
-  super();
+destroy() {
+  this.handles.removeAll();
+  this.handles.destroy();
 }
 ```
 
-TypeScript will complain about references to classes and utilities we haven't imported, so let's go ahead and fix that.
-
-## Setup public methods
-
-Let's bring in our public methods so we can finish implementing our public API.
-
-```tsx
-async save(): Promise<void> {
-  const { item, thumbnail } = this;
-
-  if (!item) {
-    throw new EsriError(
-      "item-score-reviewer::missing-item-id",
-      "cannot save item data without loading item data first"
-    );
-  }
-
-  const data = item.toJSON();
-  this.item = await item.update({ data });
-
-  await item.updateThumbnail({ filename: "item-thumbnail", thumbnail });
-
-  this._set("suggestions", this._reviewItem());
-}
-
-async load(): Promise<void> {
-  const { itemId, portal } = this;
-
-  if (!itemId) {
-    throw new EsriError("item-score-reviewer::missing-item-id", "cannot load item data without item ID");
-  }
-
-  const item = new PortalItem({ id: itemId, portal });
-  this.item = item;
-
-  await item.load();
-
-  if (item.thumbnailUrl) {
-    const thumbnail = await request(item.thumbnailUrl, {
-      responseType: "blob"
-    }).then(({ data }) => data);
-
-    this.set("thumbnail", thumbnail);
-  } else {
-    this.set("thumbnail", null);
-  }
-
-  this._set("suggestions", this._reviewItem());
-}
-```
-
-## Add private methods
-
-```tsx
-private _reviewItem(): Suggestion[] {
-  const suggestions: Suggestion[] = [];
-
-  const { title, tags, summary, thumbnail, termsOfUse, description } = this;
-
-  if (!summary) {
-    suggestions.push({
-      property: "summary",
-      type: "add"
-    });
-  } else {
-    const wordCount = summary.split(" ").length;
-
-    if (wordCount < 10) {
-      suggestions.push({
-        property: "summary",
-        type: "enhance"
-      });
-    }
-  }
-
-  if (!description) {
-    suggestions.push({
-      property: "description",
-      type: "add"
-    });
-  } else {
-    const wordCount = description.split(" ").length;
-
-    if (wordCount < 10) {
-      suggestions.push({
-        property: "description",
-        type: "enhance"
-      });
-    }
-  }
-
-  if (!tags) {
-    suggestions.push({
-      property: "tags",
-      type: "add"
-    });
-  } else {
-    const tagCount = tags.length;
-
-    if (tagCount < 3) {
-      suggestions.push({
-        property: "tags",
-        type: "enhance"
-      });
-    }
-  }
-
-  if (!thumbnail) {
-    suggestions.push({
-      property: "thumbnail",
-      type: "add"
-    });
-  }
-
-  if (!termsOfUse) {
-    suggestions.push({
-      property: "termsOfUse",
-      type: "add"
-    });
-  }
-
-  if (!title) {
-    suggestions.push({
-      property: "title",
-      type: "add"
-    });
-  }
-
-  return suggestions;
-}
-```
+### Test out class
 
 We have now implemented our class and we can test it in our demo page.
-
-## Test out class
 
 ```js
 // should throw an error

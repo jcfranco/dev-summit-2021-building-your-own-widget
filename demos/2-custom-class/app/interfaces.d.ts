@@ -22,9 +22,7 @@ export interface EffectValueType {
   unit: "%" | "deg" | "px";
 }
 
-export interface EffectLayer extends Layer {
-  effect: any;
-}
+export type LayerEffectCollection = Collection<LayerEffect>;
 
 export interface LayerEffectProperties {
   id: LayerEffectID;
@@ -32,8 +30,10 @@ export interface LayerEffectProperties {
   enabled?: boolean;
 }
 
-export type LayerEffectCollection = Collection<LayerEffect>;
+export interface EffectLayer extends Layer {
+  effect: any;
+}
 
-interface LayerFXProperties {
+export interface LayerFXProperties {
   layer: EffectLayer;
 }
