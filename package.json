@@ -11,7 +11,7 @@
   },
   "homepage": "https://github.com/jcfranco/dev-summit-2021-building-your-own-widget#readme",
   "dependencies": {
-    "@types/arcgis-js-api": "~4.18.0",
+    "@types/arcgis-js-api": "^4.18.0",
     "esri-reveal.js-templates": "git+https://github.com/esri/reveal.js.git",
     "tslib": "^2.1.0"
   },
@@ -39,5 +39,13 @@
         }
       }
     ]
-  }
+  },
+  "description": "[Preview presentation](https://jcfranco.github.io/dev-summit-2021-building-your-own-widget/slides/#/)",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

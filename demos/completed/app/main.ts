@@ -1,8 +1,8 @@
-import intl = require("esri/intl");
-import Map = require("esri/Map");
-import MapView = require("esri/views/MapView");
-import FeatureLayer = require("esri/layers/FeatureLayer");
-import LayerFX = require("./LayerFX");
+import intl from "esri/intl";
+import Map from "esri/Map";
+import MapView from "esri/views/MapView";
+import FeatureLayer from "esri/layers/FeatureLayer";
+import LayerFX from "./LayerFX";
 
 const layer = new FeatureLayer({
   url:

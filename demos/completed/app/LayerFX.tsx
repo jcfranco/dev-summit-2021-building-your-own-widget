@@ -2,9 +2,9 @@ import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorator
 import { messageBundle, tsx } from "esri/widgets/support/widget";
 import { EffectLayer, LayerFXWidgetProperties } from "./interfaces";
 import { CSS } from "./resources";
-import LayerFXViewModel = require("./LayerFXViewModel");
-import LayerEffect = require("./LayerEffect");
-import Widget = require("esri/widgets/Widget");
+import LayerFXViewModel from "./LayerFXViewModel";
+import LayerEffect from "./LayerEffect";
+import Widget from "esri/widgets/Widget";
 
 @subclass("esri.demo.LayerFX")
 class LayerFX extends Widget {

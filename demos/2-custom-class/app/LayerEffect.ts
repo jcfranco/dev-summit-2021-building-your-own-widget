@@ -1,4 +1,4 @@
-import Accessor = require("esri/core/Accessor");
+import Accessor from "esri/core/Accessor";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
 import { LayerEffectProperties, LayerEffectID, EffectValueType } from "./interfaces";
 import { getEffectValueTypes } from "./layerFXUtils";

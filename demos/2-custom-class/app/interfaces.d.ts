@@ -1,6 +1,6 @@
-import Collection = require("esri/core/Collection");
-import Layer = require("esri/layers/Layer");
-import LayerEffect = require("./LayerEffect");
+import Collection from "esri/core/Collection";
+import Layer from "esri/layers/Layer";
+import LayerEffect from "./LayerEffect";
 
 export type LayerEffectID =
   | "bloom"

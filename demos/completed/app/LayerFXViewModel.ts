@@ -1,10 +1,10 @@
-import Accessor = require("esri/core/Accessor");
-import Collection = require("esri/core/Collection");
-import Handles = require("esri/core/Handles");
+import Accessor from "esri/core/Accessor";
+import Collection from "esri/core/Collection";
+import Handles from "esri/core/Handles";
 import { watch } from "esri/core/watchUtils";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
 import { EffectLayer, LayerFXProperties, LayerEffectCollection, LayerFXState } from "./interfaces";
-import LayerEffect = require("./LayerEffect");
+import LayerEffect from "./LayerEffect";
 
 const LayerEffectCollection = Collection.ofType(LayerEffect);
 

@@ -17,7 +17,7 @@
   - `LayerFX` Class
   - Simple Widget
   - `LayerFX` Widget
-- Going further
+- Additional improvements
 
 ---
 
@@ -62,7 +62,7 @@ greet(person); // Hello Franco!
 
 ---
 
-# Modern JS
+# Modern JavaScript
 
 ```ts
 // let and const
@@ -97,7 +97,7 @@ const shorthand = { person };
 
 # Demo: [Dev Environment](../demos/1-setup/)
 
-- Install TypeScript + JS API
+- [Typescript setup](https://developers.arcgis.com/javascript/latest/typescript-setup/)
 
 ---
 
@@ -105,7 +105,7 @@ const shorthand = { person };
 
 # Demo Recap: Dev Environment
 
-- Installed TypeScript + JS API typings
+- Install of TypeScript + JS API typings
 - Built simple mapping application
 
 ---
@@ -483,7 +483,7 @@ interface LayerFX extends Widget {
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
-# Going further
+# Additional improvements
 
 Supporting other languages
 

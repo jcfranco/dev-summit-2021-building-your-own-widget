@@ -1,16 +1,13 @@
-// import Map from "esri/Map";
+// import EsriMap from "esri/Map";
+// import MapView from "esri/views/MapView";
 
-//----------------
-//  map setup
-//----------------
-
-// const map = new Map({
-//   basemap: "streets-vector",
+// const map = new EsriMap({
+//   basemap: "streets-vector"
 // });
 
 // const view = new MapView({
 //   map: map,
 //   container: "viewDiv",
-//   center: [-116.538433, 33.824775],
-//   zoom: 15
+//   center: [-118.244, 34.052],
+//   zoom: 12
 // });
