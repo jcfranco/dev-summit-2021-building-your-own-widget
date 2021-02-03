@@ -1,4 +1,4 @@
-import intl from "esri/intl";
+import { registerMessageBundleLoader, normalizeMessageBundleLocale } from "esri/intl";
 import Map from "esri/Map";
 import MapView from "esri/views/MapView";
 import FeatureLayer from "esri/layers/FeatureLayer";
@@ -24,10 +24,10 @@ const view = new MapView({
 });
 
 // register message bundle loader for LayerFX messages
-intl.registerMessageBundleLoader({
+registerMessageBundleLoader({
   pattern: "esri/demo/app/",
   async fetchMessageBundle(bundleId, locale) {
-    locale = intl.normalizeMessageBundleLocale(locale as any);
+    locale = normalizeMessageBundleLocale(locale as any);
     const relativePath = bundleId.replace("esri/demo/", "");
     const bundlePath = `./${relativePath}_${locale}.json`;
     const response = await fetch(bundlePath);
