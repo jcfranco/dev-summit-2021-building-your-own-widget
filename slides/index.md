@@ -254,9 +254,9 @@ interface LayerFX extends Accessor {
 
 interface LayerEffect {
   enabled: boolean;
-  id: string;
+  id: "bloom" | "blur" | ... | "sepia";
   values: number[];
-  valueTypes: object[]; // id, min, max, unit
+  valueTypes: EffectValueType[]; // id, min, max, unit
   readonly statement: string;
 }
 ```
@@ -438,7 +438,6 @@ interface LayerFXViewModel extends Accessor {
 ```ts
 interface LayerFX extends Widget {
   layer: EffectLayer;
-  messages: Record<string, string>;
   viewModel: LayerFXViewModel;
 }
 ```
