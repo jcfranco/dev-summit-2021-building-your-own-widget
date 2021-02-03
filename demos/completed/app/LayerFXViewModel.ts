@@ -129,11 +129,7 @@ class LayerFXViewModel extends Accessor {
     readOnly: true
   })
   get statements(): string {
-    const { layer, effects } = this;
-
-    if (!layer) {
-      return;
-    }
+    const { effects } = this;
 
     return effects.length
       ? effects
