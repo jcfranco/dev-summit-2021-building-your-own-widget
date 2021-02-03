@@ -104,11 +104,11 @@ class LayerFX extends Widget {
   protected renderEffectValue = (effect: LayerEffect, value: number, index: number) => {
     const { valueTypes, enabled } = effect;
     const valueType = valueTypes[index];
-    const { name, min, max } = valueType;
+    const { min, max, id } = valueType;
 
     return this.renderEffectSliderLabel({
       enabled,
-      name: name || this.messages.value,
+      name: id ? this.messages[id] : this.messages.value,
       min,
       max,
       value,

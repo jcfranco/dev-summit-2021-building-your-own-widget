@@ -20,10 +20,9 @@ export type LayerEffectID =
   | "sepia";
 
 export interface EffectValueType {
+  id?: string;
   max: number;
   min: number;
-  id?: string;
-  name?: string;
   unit: "%" | "deg" | "px";
 }
 
