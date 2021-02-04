@@ -4,6 +4,7 @@ import MapView from "esri/views/MapView";
 import FeatureLayer from "esri/layers/FeatureLayer";
 import LayerFX from "./LayerFX";
 
+// latest 14 months of unemployment statistics
 const layer = new FeatureLayer({
   url:
     "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/BLS_Monthly_Unemployment_Current_14_Months/FeatureServer/2",
