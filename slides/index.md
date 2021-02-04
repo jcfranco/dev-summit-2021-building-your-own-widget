@@ -266,7 +266,7 @@ interface LayerEffect {
 
 # Demo Recap: `LayerFX` Class
 
-- Implemented `LayerFX`
+- Implemented `LayerFX` and supporting class `LayerEffect`
   - Extended `esri/core/Accessor`
   - Created properties with `@property`
   - Typed constructor arguments
