@@ -51,6 +51,7 @@ class LayerEffect extends Accessor {
     readOnly: true
   })
   get valueTypes(): EffectValueType[] {
+    // returns the unit, and min & max values for the effect.
     return getEffectValueTypes(this.id);
   }
 

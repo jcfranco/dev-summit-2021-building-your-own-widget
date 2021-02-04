@@ -4,22 +4,43 @@
 
 Let's start off by looking at some boilerplate for creating a module or class.
 
-See `app/LayerFX.ts`
-See `app/LayerEffect.ts`
+- View `app/LayerFX.ts`
+- View `app/LayerEffect.ts`
 
-This is the minimum required to create a class in 4x. All we're doing here is creating a class that extends `esri/core/Accessor`, which is the base of all 4x classes.
+These have the minimum required to create a class in 4x. All we're doing here is creating a class that extends `esri/core/Accessor`, which is the base of all 4x classes.
 
-## LayerEffect
+## LayerEffect.ts
+
+### Add Lifecycle
+
+```ts
+//--------------------------------------------------------------------------
+//
+//  Lifecycle
+//
+//--------------------------------------------------------------------------
+
+constructor(props?: LayerEffectProperties) {
+  super(props);
+}
+```
 
 ### Import dependencies
 
 ```ts
+import { LayerFXProperties } from "./interfaces";
 import { getEffectValueTypes } from "./layerFXUtils";
 ```
 
-### Add props
+### Add properties
 
 ```ts
+//--------------------------------------------------------------------------
+//
+//  Properties
+//
+//--------------------------------------------------------------------------
+
 //----------------------------------
 //  enabled
 //----------------------------------
@@ -49,6 +70,7 @@ values: number[] = null;
   readOnly: true
 })
 get valueTypes(): EffectValueType[] {
+  // returns the unit, and min & max values for the effect.
   return getEffectValueTypes(this.id);
 }
 
@@ -82,16 +104,35 @@ getEffectTemplate(effectId: LayerEffectID, value: number[]): string {
 }
 ```
 
-## LayerFX
+## LayerFX.ts
+
+### Add Lifecycle
+
+```ts
+//--------------------------------------------------------------------------
+//
+//  Lifecycle
+//
+//--------------------------------------------------------------------------
+
+constructor(props?: LayerEffectProperties) {
+  super(props);
+}
+```
 
 ### Import dependencies
 
 ```ts
+import { LayerFXProperties } from "./interfaces";
 import Collection from "esri/core/Collection";
 import Handles from "esri/core/Handles";
 import { watch } from "esri/core/watchUtils";
 import LayerEffect from "./LayerEffect";
+```
 
+### Create collection
+
+```ts
 const LayerEffectCollection = Collection.ofType(LayerEffect);
 ```
 
@@ -110,6 +151,12 @@ handles = new Handles();
 ### Add props
 
 ```ts
+//--------------------------------------------------------------------------
+//
+//  Properties
+//
+//--------------------------------------------------------------------------
+
 //----------------------------------
 //  effects
 //----------------------------------
@@ -198,14 +245,14 @@ We've now implemented the properties from our API design. Properties defined thi
 
 ### Import missing interfaces
 
-```
-import `LayerEffectCollection` and `EffectLayer` from interfaces
-```
+- import `LayerEffectCollection` from interfaces
+- import `EffectLayer` from interfaces
 
 ### Add lifecycle methods for handles
 
 ```ts
 initialize(): void {
+  // layer.effect = "bloom(50%, 12px, 50%)"
   this.handles.add(watch(this, "statements", (statements) => (this.layer.effect = statements)));
 }
 

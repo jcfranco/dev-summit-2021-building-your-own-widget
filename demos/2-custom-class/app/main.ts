@@ -1,6 +1,7 @@
 import Map from "esri/Map";
 import MapView from "esri/views/MapView";
 import FeatureLayer from "esri/layers/FeatureLayer";
+import LayerEffect from "./LayerFX";
 import LayerFX from "./LayerFX";
 
 const layer = new FeatureLayer({
@@ -22,7 +23,9 @@ const view = new MapView({
   zoom: 3
 });
 
+var layerEffect = new LayerEffect({ enabled: false, id: "contrast", values: [0] });
 var layerFX = new LayerFX({ layer });
 
 // add to window for demo
 (window as any).layerFX = layerFX;
+(window as any).layerEffect = layerEffect;

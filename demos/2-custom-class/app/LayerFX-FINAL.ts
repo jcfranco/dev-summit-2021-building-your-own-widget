@@ -22,6 +22,7 @@ class LayerFX extends Accessor {
   }
 
   initialize(): void {
+    // layer.effect = "bloom(50%, 12px, 50%)"
     this.handles.add(watch(this, "statements", (statements) => (this.layer.effect = statements)));
   }
 
