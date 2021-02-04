@@ -1,7 +1,7 @@
 import Map from "esri/Map";
 import MapView from "esri/views/MapView";
 import FeatureLayer from "esri/layers/FeatureLayer";
-import LayerEffect from "./LayerFX";
+import LayerEffect from "./LayerEffect";
 import LayerFX from "./LayerFX";
 
 const layer = new FeatureLayer({

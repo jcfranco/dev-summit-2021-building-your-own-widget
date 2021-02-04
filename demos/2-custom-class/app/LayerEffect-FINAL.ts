@@ -74,7 +74,10 @@ class LayerEffect extends Accessor {
 
   getEffectTemplate(effectId: LayerEffectID, value: number[]): string {
     // 50%, 12px, 50%
-    const statement = this.valueTypes.map((valueType, index) => `${value[index]}${valueType.unit}`).join(",");
+    const statement = this.valueTypes
+      .filter((valueType, index) => typeof value[index] === "number")
+      .map((valueType, index) => `${value[index]}${valueType.unit}`)
+      .join(",");
 
     // bloom(50%, 12px, 50%)
     return `${effectId}(${statement})`;

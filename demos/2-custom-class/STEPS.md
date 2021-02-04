@@ -97,7 +97,10 @@ get statement(): string {
 
 getEffectTemplate(effectId: LayerEffectID, value: number[]): string {
   // 50%, 12px, 50%
-  const statement = this.valueTypes.map((valueType, index) => `${value[index]}${valueType.unit}`).join(",");
+  const statement = this.valueTypes
+      .filter((valueType, index) => typeof value[index] === "number")
+      .map((valueType, index) => `${value[index]}${valueType.unit}`)
+      .join(",");
 
   // bloom(50%, 12px, 50%)
   return `${effectId}(${statement})`;
@@ -262,21 +265,60 @@ destroy() {
 }
 ```
 
-### Test out class
+### Test out classes
 
-We have now implemented our class and we can test it in our demo page.
+We have now implemented our classes and we can test it in our demo page.
+
+#### LayerEffect
+
+Inspect the layerEffect class
 
 ```js
-// should throw an error
-itemScore.load();
+layerEffect;
 ```
 
-```js
-// should set itemId
-itemScore.itemId = "f5a89635bb394f7da2f9c82cdd73e459";
-```
+Change the ID on the class
 
 ```js
-// should load() item and have all props
-itemScore.load();
+layerEffect.id = "bloom";
+```
+
+View the class again
+
+```js
+layerEffect;
+```
+
+#### LayerFX
+
+Inspect the layerFX class
+
+```js
+layerFX;
+```
+
+Enable the first item and set values.
+
+```js
+layerFX.effects.getItemAt(0).enabled = true;
+layerFX.effects.getItemAt(0).values = [10, 20, 30];
+```
+
+View statements
+
+```js
+layerFX.statements;
+```
+
+Enable the second item and set values.
+
+```js
+layerFX.effects.getItemAt(1).enabled = true;
+layerFX.effects.getItemAt(1).values = [10];
+```
+
+View statements
+
+```js
+layerFX.statements;
 ```
