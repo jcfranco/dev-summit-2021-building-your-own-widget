@@ -445,14 +445,6 @@ interface LayerFX extends Widget {
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
-# Demo: Styling
-
-[Esri's Design System components](https://esri.github.io/calcite-components)
-
----
-
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
-
 # Demo: [Updated View](../demos/4-custom-widget/)
 
 - Use `LayerFX` class as `LayerFXViewModel`
