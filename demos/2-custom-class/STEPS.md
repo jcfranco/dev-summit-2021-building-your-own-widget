@@ -28,7 +28,7 @@ constructor(props?: LayerEffectProperties) {
 ### Import dependencies
 
 ```ts
-import { LayerFXProperties } from "./interfaces";
+import { LayerEffectProperties } from "./interfaces";
 import { getEffectValueTypes } from "./layerFXUtils";
 ```
 
@@ -118,7 +118,7 @@ getEffectTemplate(effectId: LayerEffectID, value: number[]): string {
 //
 //--------------------------------------------------------------------------
 
-constructor(props?: LayerEffectProperties) {
+constructor(props?: LayerFXProperties) {
   super(props);
 }
 ```

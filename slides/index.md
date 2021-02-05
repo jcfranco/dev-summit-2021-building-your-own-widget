@@ -75,7 +75,7 @@ const logName = (person) => console.log(person.name);
 // template strings
 const greeting = `Hello, my name is ${person.name} and I am ${person.age} years old.`;
 
-// destructuring
+// destructuring. (unpack values into distinct variables)
 const [{ name, age }] = people;
 
 // property shorthand
@@ -123,19 +123,6 @@ const shorthand = { person };
 - JavaScript API foundation <!-- .element: class="fragment" data-fragment-index="0" -->
 - Consistent developer experience <!-- .element: class="fragment" data-fragment-index="1" -->
 
-```ts
-// unified object constructor
-const me = new Person({ name: "Franco", age: 33 });
-
-// watch for changes to `age`
-me.watch("age", () => console.log("happy birthday!"));
-
-// watch for changes to `age`
-me.watch("age", () => console.log("happy birthday!"));
-```
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
 ---
 
 # `esri/core/Accessor`
@@ -144,7 +131,7 @@ me.watch("age", () => console.log("happy birthday!"));
 
 ```ts
 class Person extends Accessor {
-  @property()
+  @property() // decorator
   name: string;
 
   @property()
@@ -219,9 +206,7 @@ Inspired by [Intro to layer effect](https://developers.arcgis.com/javascript/lat
 
 ---
 
-# Demo: Background
-
-Requirements
+# Demo: Background Requirements
 
 - Allows configuring layer effects
 - Updating effects should be applied to the layer
@@ -230,13 +215,10 @@ Requirements
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
-# Demo: Background
+# Demo: Exploring Layer Effects API
 
-Exploring the Layer Effects API
-
-[`FeatureLayer#effect`](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#effect)
-[`FeatureEffect`](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html#Effect)
-[CSS filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
+- [`FeatureLayer#effect`](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#effect)
+- [`FeatureEffect`](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-layers-support-FeatureEffect.html#Effect)
 
 ---
 
@@ -245,13 +227,13 @@ Exploring the Layer Effects API
 # Demo: [`LayerFX` Class API](../demos/2-custom-class/)
 
 ```ts
-interface LayerFX extends Accessor {
+interface LayerFX extends Accessor { // main class
   layer: Layer;
-  readonly effects: Collection<LayerEffect>;
+  readonly effects: Collection<LayerEffect>; // collection of helper classes
   readonly statements: string;
 }
 
-interface LayerEffect {
+interface LayerEffect { // helper class
   enabled: boolean;
   id: "bloom" | "blur" | ... | "sepia";
   values: number[];
