@@ -32,11 +32,7 @@
 <!-- background: section/content will tie into widget dev -->
 <!-- background: including TS in all steps because it's needed for widget dev -->
 
-JS API + TypeScript
-
----
-
-# [TypeScript](http://www.typescriptlang.org/)
+JS API + [TypeScript](http://www.typescriptlang.org/)
 
 ---
 
