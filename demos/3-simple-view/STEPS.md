@@ -28,7 +28,6 @@ Lets add a property to our widget
 
 ```ts
 @property()
-@renderable()
 enabled = false;
 ```
 
@@ -41,6 +40,8 @@ const CSS = {
 };
 ```
 
+**Note**: CSS classes ☝ follow [BEM Methodology](http://getbem.com/) 
+
 ## Modify our render method
 
 Modify our render method to contain a button that toggles a class
@@ -49,13 +50,15 @@ Modify our render method to contain a button that toggles a class
 render() {
   const { enabled } = this;
 
+  const rootClasses = {
+    [CSS.base]: true,
+    [CSS.enabled]: enabled
+  };
+
   return (
-    <button
-      bind={this}
-      class={this.classes(CSS.base, enabled && CSS.enabled)}
-     >
+    <div class={this.classes(rootClasses)}>
       {enabled ? "Enabled" : "Disabled"}
-    </button>
+    </div>
   );
 }
 ```
@@ -67,17 +70,17 @@ You should see a `Disabled` button.
 ## Add onclick
 
 ```tsx
-onclick={this._toggle}
+onclick={this._toggle} 
 ```
 
 ## Add private method to handle event
 
 ```ts
-private _toggle(): void {
+private _toggle = (): void => {
   this.enabled = !this.enabled;
-}
+};
 ```
 
 ## Complete
 
-We're done with this set of steps! Compile, view, and proceed to the [next steps](../4-updated-view/STEPS.md).
+We're done with this set of steps! Compile, view, and proceed to the [next steps](../4-custom-widget/STEPS.md).

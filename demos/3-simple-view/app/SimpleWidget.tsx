@@ -1,22 +1,18 @@
-/// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
-/// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
-
-import Widget = require("esri/widgets/Widget");
-
-import { renderable, tsx } from "esri/widgets/support/widget";
-
-import { property, declared, subclass } from "esri/core/accessorSupport/decorators";
+import Widget from "esri/widgets/Widget";
+import { tsx } from "esri/widgets/support/widget";
+import { subclass } from "esri/core/accessorSupport/decorators";
+import WidgetProperties = __esri.WidgetProperties;
 
 @subclass("esri.demo.SimpleWidget")
-class SimpleWidget extends declared(Widget) {
+class SimpleWidget extends Widget {
   //--------------------------------------------------------------------------
   //
   //  Lifecycle
   //
   //--------------------------------------------------------------------------
 
-  constructor() {
-    super();
+  constructor(params?: WidgetProperties) {
+    super(params);
   }
 
   //--------------------------------------------------------------------------
@@ -34,7 +30,7 @@ class SimpleWidget extends declared(Widget) {
   //--------------------------------------------------------------------------
 
   render() {
-    return <div>hello world</div>;
+    return <div/>;
   }
 
   //--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
-import Map = require("esri/Map");
-import MapView = require("esri/views/MapView");
-import SimpleWidget = require("./SimpleWidget");
+import Map from "esri/Map";
+import MapView from "esri/views/MapView";
+import SimpleWidget from "./SimpleWidget";
 
 //----------------
 //  map setup

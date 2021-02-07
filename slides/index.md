@@ -306,7 +306,7 @@ interface LayerEffect { // helper class
 - Defines UI
 - Reacts to state changes
 - Uses JSX (VDOM)
-- <!-- .element: class="fragment" data-fragment-index="1" -->Will automatically re-render on property updates ✨new✨
+- <!-- .element: class="fragment" data-fragment-index="1" -->Re-renders on prop updates ✨new✨
 
 ---
 
@@ -337,8 +337,8 @@ Develop a simple widget
 - Extended `esri/widgets/Widget`
 - Implemented `render()`
 - Added a renderable `property()`
-- Added `onclick` event
-- Added CSS Object + [BEM Methodology](http://getbem.com/)
+- Added `onclick` event for interaction
+- Added CSS Object
 - Toggled property with event to re-render
 
 ---
@@ -393,7 +393,7 @@ Develop a simple widget
 
 # Let's create `LayerFX` Widget
 
-[<img src="img/completed-demo.png" height=500 />](../demos/completed/)
+[<img src="img/layerfx-widget.png" height=450 />](../demos/completed/)
 
 ---
 
@@ -436,17 +436,13 @@ interface LayerFX extends Widget {
 
 ---
 
-# Demo Recap: Update View
+# Demo Recap: Updated View
 
 - Paired View and ViewModel
 - Rendered properties from ViewModel
 - Wired up interactivity
 - Learned to apply styles
-- Dynamically rendered UI based on a property value change
-
----
-
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
+- Updated UI based on a property value change
 
 ---
 
@@ -484,7 +480,6 @@ Supporting other languages
 - [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html)
 - [Styling](https://developers.arcgis.com/javascript/latest/guide/styling/)
 - [ArcGIS API for JavaScript - next](https://github.com/Esri/feedback-js-api-next)
-- [Widget Patterns](https://github.com/jcfranco/4x-widget-patterns)
 
 ---
 
