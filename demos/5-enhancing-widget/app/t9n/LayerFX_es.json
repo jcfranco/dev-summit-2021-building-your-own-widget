@@ -1,0 +1,22 @@
+{
+  "title": "Efectors de Capa",
+  "summary": "Layer.effect proporciona varias funciones de filtro que se pueden realizar en la capa para lograr diferentes efectos visuales similares a cómo funcionan los filtros de imagen.",
+  "value": "Valor",
+  "bloom": "Resplandor",
+  "blur": "Difuminar",
+  "blurRadius": "Radio de desenfoque",
+  "offsetX": "Desplazamiento X",
+  "offsetYF": "Desplazamiento Y",
+  "brightness": "Brillo",
+  "contrast": "Contraste",
+  "drop-shadow": "Sombra paralela",
+  "grayscale": "Escala de grises",
+  "hue-rotate": "Tono rotar",
+  "invert": "Invertir",
+  "opacity": "Opacidad",
+  "saturate": "Saturar",
+  "sepia": "Sepia",
+  "radius": "Radio",
+  "strength": "Intensidad",
+  "threshold": "Umbral"
+}

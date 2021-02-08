@@ -1,0 +1,60 @@
+/* https://color.adobe.com/ds21-bright-color-theme-16850975 */
+
+.layer-fx {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 1rem;
+  margin: 0;
+  background-color: #0442bf;
+  border: 1px solid #116ebf;
+  color: #fff;
+}
+
+.layer-fx h2 {
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+}
+
+.layer-fx p {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+}
+
+.layer-fx__container {
+  flex: 1;
+  overflow: auto;
+}
+
+.layer-fx fieldset {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #116ebf;
+  border-collapse: collapse;
+}
+
+.layer-fx fieldset:hover {
+  border-color: #bf0f70;
+}
+
+.layer-fx fieldset[disabled] label {
+  color: #ddd;
+}
+
+.layer-fx label {
+  display: flex;
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  color: #f2b705;
+  font-weight: bold;
+}
+
+.layer-fx label:hover {
+  color: #f20530;
+}
+
+.layer-fx__slider {
+  flex: 1;
+}

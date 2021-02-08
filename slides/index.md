@@ -287,21 +287,22 @@ interface LayerEffect { // helper class
 - Extends `esri/core/Accessor`
   - Properties
   - Watching properties
+  - Etc...
 - Lifecycle
 
 ---
 
 # Lifecycle
 
-- `constructor`
-- `postInitialize`
-- `render`
+- `constructor()`
+- `postInitialize()`
+- `render()`
   - `when()` after first render
-- `destroy`
+- `destroy()`
 
 ---
 
-# `render`
+# `render()`
 
 - Defines UI
 - Reacts to state changes
@@ -338,7 +339,7 @@ Develop a simple widget
 - Implemented `render()`
 - Added a renderable `property()`
 - Added `onclick` event for interaction
-- Added CSS Object
+- Added CSS lookup object
 - Toggled property with event to re-render
 
 ---
@@ -423,7 +424,7 @@ interface LayerFX extends Widget {
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-3.png" data-background-size="cover" -->
 
-# Demo: [Updated View](../demos/4-custom-widget/)
+# Demo: [LayerFX Widget](../demos/4-custom-widget/)
 
 - Use `LayerFX` class as `LayerFXViewModel`
   - Add a state property
@@ -436,7 +437,7 @@ interface LayerFX extends Widget {
 
 ---
 
-# Demo Recap: Updated View
+# Demo Recap: LayerFX Widget
 
 - Paired View and ViewModel
 - Rendered properties from ViewModel
@@ -459,6 +460,12 @@ Supporting other languages
 ---
 
 # Demo: [Supporting other locales](../demos/5-custom-widget-with-t9n/)
+
+---
+
+# Demo Recap: Supporting other locales
+
+- Configured and loaded t9n message bundles
 
 ---
 
