@@ -169,7 +169,7 @@ handles = new Handles();
   type: Collection.ofType(LayerEffect)
 })
 get effects(): LayerEffectCollection {
-  return new LayerEffectCollection([
+  return this._get("effects") ||  new LayerEffectCollection([
     new LayerEffect({
       id: "bloom",
       values: [0, 0, 0]

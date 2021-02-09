@@ -6,6 +6,7 @@ export const CSS = {
   container: "layer-fx__container",
   slider: "layer-fx__slider",
   checkbox: "layer-fx__checkbox",
+  disabledEffect: "layer-fx__effect--disabled",
 
   // common
   esriWidget: "esri-widget",

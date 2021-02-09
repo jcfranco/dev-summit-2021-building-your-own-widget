@@ -1,6 +1,10 @@
 import Accessor from "esri/core/Accessor";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
-import { EffectLayer, LayerFXProperties, LayerEffectCollection } from "./interfaces";
+import {
+  EffectLayer,
+  LayerFXProperties,
+  LayerEffectCollection, LayerFXState
+} from "./interfaces";
 
 import Collection from "esri/core/Collection";
 import Handles from "esri/core/Handles";
@@ -10,7 +14,7 @@ import LayerEffect from "./LayerEffect";
 const LayerEffectCollection = Collection.ofType(LayerEffect);
 
 @subclass("esri.demo.LayerFX")
-class LayerFX extends Accessor {
+class LayerFXViewModel extends Accessor {
   //--------------------------------------------------------------------------
   //
   //  Lifecycle
@@ -54,7 +58,7 @@ class LayerFX extends Accessor {
     type: Collection.ofType(LayerEffect)
   })
   get effects(): LayerEffectCollection {
-    return new LayerEffectCollection([
+    return this._get("effects") || new LayerEffectCollection([
       new LayerEffect({
         id: "bloom",
         values: [0, 0, 0]
@@ -110,6 +114,20 @@ class LayerFX extends Accessor {
   layer: EffectLayer = null;
 
   //----------------------------------
+  //  state
+  //----------------------------------
+
+  @property({
+    readOnly: true
+  })
+  get state(): LayerFXState {
+    const { layer } = this;
+    const supportedLayer = layer && "effect" in layer;
+
+    return supportedLayer ? (layer.loaded ? "ready" : "loading") : "disabled";
+  }
+
+  //----------------------------------
   //  statements
   //----------------------------------
 
@@ -129,4 +147,4 @@ class LayerFX extends Accessor {
   }
 }
 
-export = LayerFX;
+export = LayerFXViewModel;

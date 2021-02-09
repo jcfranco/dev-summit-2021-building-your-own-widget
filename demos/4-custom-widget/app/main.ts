@@ -1,7 +1,7 @@
 import Map from "esri/Map";
 import MapView from "esri/views/MapView";
 import FeatureLayer from "esri/layers/FeatureLayer";
-import LayerFX from "./LayerFX";
+import LayerFXView from "./LayerFXView";
 
 // latest 14 months of unemployment statistics
 const layer = new FeatureLayer({
@@ -23,7 +23,7 @@ const view = new MapView({
   zoom: 3
 });
 
-var layerFX = new LayerFX({ layer });
+var layerFX = new LayerFXView({ layer });
 
 view.ui.add(layerFX, "top-right");
 

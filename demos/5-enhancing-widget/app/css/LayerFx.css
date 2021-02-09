@@ -39,10 +39,6 @@
   border-color: #bf0f70;
 }
 
-.layer-fx fieldset[disabled] label {
-  color: #ddd;
-}
-
 .layer-fx label {
   display: flex;
   margin: 0 0 0.5rem 0;
@@ -57,4 +53,8 @@
 
 .layer-fx__slider {
   flex: 1;
+}
+
+.layer-fx .layer-fx__effect--disabled label {
+  color: #ddd;
 }
