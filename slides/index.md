@@ -17,7 +17,6 @@
   - `LayerFX` Class
   - Simple Widget
   - `LayerFX` Widget
-- Additional improvements
 
 ---
 
@@ -449,34 +448,11 @@ interface LayerFX extends Widget {
 
 <!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
 
-# Additional improvements
-
-Supporting other languages
-
-- Message bundles (translations: `t9n`)
-  - loader
-  - `@messageBundle`
-
----
-
-# Demo: [Supporting other locales](../demos/5-custom-widget-with-t9n/)
-
----
-
-# Demo Recap: Supporting other locales
-
-- Configured and loaded t9n message bundles
-
----
-
-<!-- .slide: data-background="../node_modules/esri-reveal.js-templates/img/2021/dev-summit/bg-4.png" data-background-size="cover" -->
-
 # Final Recap
 
 - Set up dev environment
 - Wrote `LayerFX` class
 - Developed a `LayerFX` Widget
-- Enhanced `LayerFX` Widget
 
 ---
 
