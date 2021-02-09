@@ -1,6 +1,7 @@
 import Accessor from "esri/core/Accessor";
 import { property, subclass } from "esri/core/accessorSupport/decorators";
 import { LayerEffectProperties, LayerEffectID, EffectValueType } from "./interfaces";
+
 import { getEffectValueTypes } from "./layerFXUtils";
 
 @subclass("esri.demo.LayerEffect")
@@ -50,6 +51,7 @@ class LayerEffect extends Accessor {
     readOnly: true
   })
   get valueTypes(): EffectValueType[] {
+    // returns the unit, and min & max values for the effect.
     return getEffectValueTypes(this.id);
   }
 

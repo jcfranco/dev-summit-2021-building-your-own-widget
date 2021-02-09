@@ -1,39 +1,27 @@
-# Custom Widget Steps
+import { aliasOf, property, subclass } from "esri/core/accessorSupport/decorators";
+import { tsx } from "esri/widgets/support/widget";
+import { CSS } from "./resources";
+import Widget from "esri/widgets/Widget";
+import WidgetProperties = __esri.WidgetProperties;
 
-## Preface
+@subclass("esri.demo.LayerFX")
+class LayerFX extends Widget {
+  //--------------------------------------------------------------------------
+  //
+  //  Lifecycle
+  //
+  //--------------------------------------------------------------------------
 
-This demo picks up after our previous two. Notice how we have all of the classes from the custom class demo as well as a simple starter widget. 
+  constructor(props: WidgetProperties) {
+    super(props);
+  }
 
-## Repurposing `LayerFX.ts` as our ViewModel
+  //--------------------------------------------------------------------------
+  //
+  //  Properties
+  //
+  //--------------------------------------------------------------------------
 
-`LayerFX.ts` has all of the business logic that we want out of our widget, so let's reuse it. We'll rename it to `LayerFXViewModel.ts`.
-
-The only change we'll make here is add a `state` prop for the View to know when it's ready for interaction.
-
-```ts
-//----------------------------------
-//  state
-//----------------------------------
-
-@property({
-  readOnly: true
-})
-get state(): LayerFXState {
-  const { layer } = this;
-  const supportedLayer = layer && "effect" in layer;
-
-  return supportedLayer ? (layer.loaded ? "ready" : "loading") : "disabled";
-}
-```
-
-## Beefing up our widget
-
-If you look at `LayerFX.tsx`, you'll see that we have a barebones widget, similar to what we did in the previous demo. 
-It's set up to take the base widget properties and to render a div with Hello World as its content.
-
-First off, I'll want to add some properties that we'll be using when we render our widget's UI.
-
-```ts
   //----------------------------------
   //  layer
   //----------------------------------
@@ -46,7 +34,7 @@ First off, I'll want to add some properties that we'll be using when we render o
   //----------------------------------
 
   @property()
-  messages: Record<string, string> = messages;
+  messages: Record<string, string>;
 
   //----------------------------------
   //  viewModel
@@ -54,19 +42,13 @@ First off, I'll want to add some properties that we'll be using when we render o
 
   @property()
   viewModel: LayerFXViewModel = new LayerFXViewModel();
-```
 
-After this, we'll need to update the constructor to allow setting these props. Luckily, we already have an interface that merges the LayerFX class props with the base widget ones.
+  //--------------------------------------------------------------------------
+  //
+  //  Public Methods
+  //
+  //--------------------------------------------------------------------------
 
-```ts
-constructor(props?: WidgetProperties) {
-    super(props);
-  }
-```
-   
-Next, we'll move onto rendering. Let's add our main render method.
-
-```tsx
   render() {
     const { effects } = this.viewModel;
 
@@ -78,11 +60,13 @@ Next, we'll move onto rendering. Let's add our main render method.
       </div>
     );
   }
-```
 
-Next we have supporting render methods to make them easier to manage.
+  //--------------------------------------------------------------------------
+  //
+  //  Protected Methods
+  //
+  //--------------------------------------------------------------------------
 
-```tsx
   protected renderEffect = (effect: LayerEffect) => {
     return (
       <fieldset disabled={!effect.enabled}>
@@ -157,11 +141,13 @@ Next we have supporting render methods to make them easier to manage.
       </label>
     );
   };
-```
 
-Finally, we have some event handlers for updating the values of our checkboxes and sliders when the user interacts with them
+  //--------------------------------------------------------------------------
+  //
+  //  Private Methods
+  //
+  //--------------------------------------------------------------------------
 
-```ts
   private updateEnabled = (event: Event, effect: LayerEffect) => {
     const target = event.target as HTMLInputElement;
     effect.enabled = !!target.checked;
@@ -173,6 +159,6 @@ Finally, we have some event handlers for updating the values of our checkboxes a
     value[index] = target.valueAsNumber;
     effect.values = value;
   };
-```
+}
 
-This wraps up our custom widget and we can take it for a spin.
+export = LayerFX;
